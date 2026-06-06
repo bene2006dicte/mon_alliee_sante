@@ -1,0 +1,3207 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+  <title>Mon Alliée Santé — Santé féminine intelligente</title>
+  <!-- Polices premium depuis Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;600;700;800&display=swap"
+    rel="stylesheet">
+
+  <style>
+    :root {
+      /* Palette HSL harmonieuse et premium */
+      --primary-hue: 340;
+      /* Teintes de rose/magenta */
+      --primary: hsl(var(--primary-hue), 80%, 48%);
+      --primary-light: hsl(var(--primary-hue), 80%, 94%);
+      --primary-dark: hsl(var(--primary-hue), 85%, 35%);
+      --primary-gradient: linear-gradient(135deg, hsl(var(--primary-hue), 90%, 55%) 0%, hsl(var(--primary-hue), 80%, 40%) 100%);
+
+      --accent-hue: 325;
+      --accent: hsl(var(--accent-hue), 80%, 48%);
+      --accent-light: hsl(var(--accent-hue), 90%, 96%);
+
+      --bg-dark: hsl(var(--primary-hue), 30%, 8%);
+      --bg-light: hsl(var(--primary-hue), 40%, 97%);
+      --card-bg: #ffffff;
+
+      --text-main: hsl(var(--primary-hue), 30%, 20%);
+      --text-muted: hsl(var(--primary-hue), 15%, 50%);
+      --border-color: hsl(var(--primary-hue), 60%, 90%);
+
+      --shadow-sm: 0 4px 12px rgba(194, 24, 91, 0.05);
+      --shadow-md: 0 8px 24px rgba(194, 24, 91, 0.1);
+      --shadow-lg: 0 16px 36px rgba(194, 24, 91, 0.16);
+
+      --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background: radial-gradient(circle at 20% 30%, hsl(var(--primary-hue), 40%, 92%) 0%, hsl(var(--primary-hue), 30%, 82%) 100%);
+      font-family: 'Inter', sans-serif;
+      color: var(--text-main);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 24px;
+      overflow-x: hidden;
+    }
+
+    /* Cadre de Smartphone Premium pour écran large */
+    .device-wrapper {
+      position: relative;
+      width: 400px;
+      height: 820px;
+      background: #111111;
+      border: 12px solid #222222;
+      border-radius: 56px;
+      box-shadow: 0 25px 60px -10px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(255, 255, 255, 0.05);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      transform: translate3d(0, 0, 0);
+    }
+
+    /* Dynamic Island simulé */
+    .dynamic-island {
+      position: absolute;
+      top: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 110px;
+      height: 28px;
+      background: #000000;
+      border-radius: 20px;
+      z-index: 2000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+    }
+
+    .dynamic-island::after {
+      content: '';
+      width: 12px;
+      height: 12px;
+      background: #111;
+      border-radius: 50%;
+      position: absolute;
+      right: 16px;
+      opacity: 0.6;
+    }
+
+    /* Conteneur principal de l'application */
+    .mobile-app {
+      flex: 1;
+      background: var(--bg-light);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    /* Splash Screen Moderne */
+    .splash-screen {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: var(--primary-gradient);
+      z-index: 1500;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      transition: transform 0.6s cubic-bezier(0.77, 0, 0.175, 1), opacity 0.5s ease-out;
+    }
+
+    .splash-screen.fade-out {
+      transform: translateY(-100%);
+      opacity: 0;
+    }
+
+    .splash-logo {
+      font-size: 72px;
+      background: rgba(255, 255, 255, 0.15);
+      width: 120px;
+      height: 120px;
+      border-radius: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      animation: bounceFloat 3s ease-in-out infinite;
+    }
+
+    @keyframes bounceFloat {
+
+      0%,
+      100% {
+        transform: translateY(0) scale(1);
+      }
+
+      50% {
+        transform: translateY(-12px) scale(1.02);
+      }
+    }
+
+    .splash-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 36px;
+      font-weight: 800;
+      color: white;
+      margin-top: 24px;
+      letter-spacing: -0.5px;
+    }
+
+    .splash-subtitle {
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.85);
+      text-align: center;
+      padding: 0 32px;
+      margin-top: 10px;
+      line-height: 1.5;
+    }
+
+    .splash-loader {
+      width: 48px;
+      height: 48px;
+      border: 3.5px solid rgba(255, 255, 255, 0.2);
+      border-top: 3.5px solid white;
+      border-radius: 50%;
+      animation: spin 1s cubic-bezier(0.5, 0.1, 0.5, 0.9) infinite;
+      margin-top: 48px;
+    }
+
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    /* Écrans d'Authentification Avancés */
+    .auth-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: var(--bg-light);
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      padding: 32px 24px 24px 24px;
+      overflow-y: auto;
+      transition: all var(--transition-normal);
+    }
+
+    .auth-header {
+      text-align: center;
+      margin-top: 40px;
+      margin-bottom: 32px;
+    }
+
+    .auth-logo-icon {
+      font-size: 40px;
+      margin-bottom: 12px;
+    }
+
+    .auth-logo-text {
+      font-family: 'Outfit', sans-serif;
+      font-size: 26px;
+      font-weight: 800;
+      color: var(--primary);
+      letter-spacing: -0.5px;
+    }
+
+    .auth-subtitle {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    .auth-card {
+      background: var(--card-bg);
+      border-radius: 32px;
+      padding: 24px 20px;
+      box-shadow: var(--shadow-md);
+      border: 1px solid var(--border-color);
+      transition: transform var(--transition-normal);
+    }
+
+    .auth-form-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--primary-dark);
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .auth-input-group {
+      margin-bottom: 16px;
+    }
+
+    .auth-input-group label {
+      display: block;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .auth-input {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1.5px solid var(--border-color);
+      border-radius: 16px;
+      font-size: 14px;
+      font-family: inherit;
+      color: var(--text-main);
+      outline: none;
+      transition: all var(--transition-fast);
+      background: hsl(var(--primary-hue), 20%, 98%);
+    }
+
+    .auth-input:focus {
+      border-color: var(--primary);
+      background: #ffffff;
+      box-shadow: 0 0 0 3px var(--primary-light);
+    }
+
+    .auth-btn {
+      background: var(--primary-gradient);
+      color: white;
+      border: none;
+      border-radius: 20px;
+      padding: 14px;
+      width: 100%;
+      font-weight: 700;
+      font-size: 15px;
+      font-family: 'Outfit', sans-serif;
+      margin-top: 10px;
+      cursor: pointer;
+      box-shadow: 0 6px 16px rgba(216, 27, 96, 0.25);
+      transition: all var(--transition-fast);
+    }
+
+    .auth-btn:active {
+      transform: scale(0.98);
+      box-shadow: 0 3px 8px rgba(216, 27, 96, 0.2);
+    }
+
+    .auth-switch-text {
+      margin-top: 18px;
+      font-size: 13px;
+      color: var(--primary-dark);
+      cursor: pointer;
+      text-align: center;
+      font-weight: 500;
+    }
+
+    .auth-switch-text span {
+      text-decoration: underline;
+      font-weight: 600;
+    }
+
+    .auth-demo-btn {
+      text-align: center;
+      margin-top: 24px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+      cursor: pointer;
+      padding: 10px;
+      border-radius: 14px;
+      background: rgba(194, 24, 91, 0.05);
+      transition: var(--transition-fast);
+    }
+
+    .auth-demo-btn:hover {
+      color: var(--primary);
+      background: var(--primary-light);
+    }
+
+    /* Corps applicatif après Auth */
+    .app-content {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      flex: 1;
+    }
+
+    /* Barre d'état fictive style iOS */
+    .status-bar {
+      padding: 38px 24px 8px 24px;
+      /* Un peu d'espace pour le Dynamic Island */
+      background: #ffffff;
+      font-size: 12px;
+      font-weight: 700;
+      display: flex;
+      justify-content: space-between;
+      color: var(--text-main);
+      z-index: 100;
+      border-bottom: 1px solid rgba(194, 24, 91, 0.03);
+    }
+
+    .status-bar-icons {
+      display: flex;
+      gap: 6px;
+    }
+
+    /* En-tête de l'application symétrique */
+    .app-header {
+      padding: 12px 18px;
+      display: grid;
+      grid-template-columns: 40px 1fr 40px;
+      align-items: center;
+      background: #ffffff;
+      box-shadow: var(--shadow-sm);
+      z-index: 10;
+    }
+
+    .settings-trigger {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: hsl(var(--primary-hue), 20%, 96%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      cursor: pointer;
+      color: var(--text-main);
+      transition: all var(--transition-fast);
+      border: 1px solid var(--border-color);
+      justify-self: end;
+    }
+
+    .settings-trigger:active {
+      transform: scale(0.9);
+      background: var(--primary-light);
+      border-color: var(--primary);
+    }
+
+    .logo-container {
+      text-align: center;
+    }
+
+    .logo-container h2 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 19px;
+      font-weight: 800;
+      background: var(--primary-gradient);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      line-height: 1.1;
+    }
+
+    .logo-container p {
+      font-size: 8px;
+      color: var(--accent);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .profile-trigger {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--primary-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      cursor: pointer;
+      border: 2px solid var(--primary);
+      transition: transform var(--transition-fast);
+      overflow: hidden;
+      justify-self: start;
+    }
+
+    .profile-trigger img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .profile-trigger:active {
+      transform: scale(0.9);
+    }
+
+    /* Zone centrale de défilement des écrans */
+    .screen-container {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px 16px 90px 16px;
+      scroll-behavior: smooth;
+    }
+
+    /* Cacher la scrollbar standard */
+    .screen-container::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    .screen-container::-webkit-scrollbar-thumb {
+      background: var(--border-color);
+      border-radius: 4px;
+    }
+
+    .screen {
+      display: none;
+      animation: slideIn var(--transition-normal);
+    }
+
+    .screen.active-screen {
+      display: block;
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Composants de base: Cartes */
+    .card {
+      background: var(--card-bg);
+      border-radius: 24px;
+      padding: 20px;
+      margin-bottom: 16px;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border-color);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--primary-dark);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Badge d'accueil personnalisé */
+    .welcome-card {
+      background: linear-gradient(135deg, hsl(var(--primary-hue), 80%, 95%) 0%, hsl(var(--primary-hue), 70%, 90%) 100%);
+      border: none;
+      margin-bottom: 28px;
+    }
+
+    .welcome-card h3 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 19px;
+      font-weight: 800;
+      color: var(--primary-dark);
+    }
+
+    .welcome-card p {
+      font-size: 13px;
+      color: var(--text-main);
+      margin-top: 4px;
+      line-height: 1.4;
+      opacity: 0.9;
+    }
+
+    /* Grille de boutons rapides */
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-bottom: 28px;
+    }
+
+    .quick-card {
+      background: var(--card-bg);
+      border: 1.5px solid var(--border-color);
+      border-radius: 20px;
+      padding: 12px 6px;
+      text-align: center;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .quick-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .quick-card:active {
+      transform: translateY(0) scale(0.96);
+    }
+
+    .quick-card-icon {
+      font-size: 24px;
+      margin-bottom: 4px;
+      display: inline-block;
+    }
+
+    .quick-card-label {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--primary-dark);
+    }
+
+    /* Assistant Chat Section */
+    .chat-container {
+      display: flex;
+      flex-direction: column;
+      height: 380px;
+      background: hsl(var(--primary-hue), 30%, 98%);
+      border-radius: 20px;
+      border: 1px solid var(--border-color);
+      overflow: hidden;
+    }
+
+    .chat-messages {
+      flex: 1;
+      padding: 12px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .chat-bubble {
+      max-width: 80%;
+      padding: 10px 14px;
+      border-radius: 18px;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .chat-bubble.ai {
+      background: #ffffff;
+      color: var(--text-main);
+      align-self: flex-start;
+      border-bottom-left-radius: 4px;
+      border: 1px solid var(--border-color);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+    }
+
+    .chat-bubble.user {
+      background: var(--primary-gradient);
+      color: white;
+      align-self: flex-end;
+      border-bottom-right-radius: 4px;
+      box-shadow: 0 4px 10px rgba(216, 27, 96, 0.15);
+    }
+
+    /* Animation de saisie de l'IA */
+    .typing-indicator {
+      display: flex;
+      gap: 4px;
+      padding: 12px 16px;
+      background: white;
+      border-radius: 18px;
+      border-bottom-left-radius: 4px;
+      border: 1px solid var(--border-color);
+      align-self: flex-start;
+      width: fit-content;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+    }
+
+    .typing-dot {
+      width: 7px;
+      height: 7px;
+      background: var(--primary);
+      border-radius: 50%;
+      animation: bounceDot 1.2s infinite ease-in-out;
+    }
+
+    .typing-dot:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+
+    .typing-dot:nth-child(3) {
+      animation-delay: 0.4s;
+    }
+
+    @keyframes bounceDot {
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-5px);
+      }
+    }
+
+    .chat-input-bar {
+      display: flex;
+      padding: 8px 10px;
+      background: #ffffff;
+      border-top: 1px solid var(--border-color);
+      gap: 8px;
+    }
+
+    .chat-input-bar input {
+      flex: 1;
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 10px 14px;
+      font-size: 13px;
+      font-family: inherit;
+      outline: none;
+      transition: var(--transition-fast);
+      background: hsl(var(--primary-hue), 20%, 98%);
+    }
+
+    .chat-input-bar input:focus {
+      border-color: var(--primary);
+      background: white;
+    }
+
+    .chat-input-bar button {
+      background: var(--primary);
+      border: none;
+      color: white;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform var(--transition-fast);
+    }
+
+    .chat-input-bar button:active {
+      transform: scale(0.9);
+    }
+
+    /* Carrousel Interactif d'Auto-Examen */
+    .carousel-container {
+      background: #ffffff;
+      border-radius: 20px;
+      border: 1px solid var(--border-color);
+      padding: 18px;
+      position: relative;
+    }
+
+    .carousel-slides {
+      position: relative;
+      height: 170px;
+      overflow: hidden;
+    }
+
+    .carousel-slide {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      transform: translateX(30px);
+      transition: all var(--transition-normal);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      pointer-events: none;
+    }
+
+    .carousel-slide.active {
+      opacity: 1;
+      transform: translateX(0);
+      pointer-events: auto;
+    }
+
+    .slide-icon {
+      font-size: 34px;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+
+    .slide-title {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      font-size: 14px;
+      color: var(--primary);
+      margin-bottom: 6px;
+      text-align: center;
+    }
+
+    .slide-desc {
+      font-size: 12px;
+      line-height: 1.5;
+      color: var(--text-main);
+      text-align: center;
+    }
+
+    .carousel-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 14px;
+    }
+
+    .carousel-btn {
+      background: var(--primary-light);
+      border: none;
+      color: var(--primary-dark);
+      padding: 8px 14px;
+      border-radius: 12px;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: var(--transition-fast);
+    }
+
+    .carousel-btn:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+
+    .carousel-dots {
+      display: flex;
+      gap: 6px;
+    }
+
+    .carousel-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--border-color);
+      transition: var(--transition-fast);
+    }
+
+    .carousel-dot.active {
+      background: var(--primary);
+      width: 14px;
+      border-radius: 4px;
+    }
+
+    /* Calendrier Menstruel Interactif */
+    .calendar-widget {
+      margin-top: 8px;
+    }
+
+    .calendar-month-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--primary);
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 5px;
+      text-align: center;
+    }
+
+    .calendar-header-day {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    .calendar-day {
+      font-size: 11px;
+      padding: 8px 0;
+      border-radius: 10px;
+      color: var(--text-main);
+      font-weight: 500;
+      background: hsl(var(--primary-hue), 20%, 98%);
+      transition: all var(--transition-fast);
+      position: relative;
+    }
+
+    .calendar-day.period {
+      background: hsl(340, 90%, 90%);
+      color: hsl(340, 85%, 45%);
+      font-weight: 700;
+    }
+
+    .calendar-day.period::after {
+      content: '🩸';
+      font-size: 6px;
+      position: absolute;
+      bottom: 2px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .calendar-day.fertile {
+      background: hsl(280, 80%, 92%);
+      color: hsl(280, 80%, 40%);
+      font-weight: 700;
+    }
+
+    .calendar-day.ovulation {
+      background: hsl(280, 85%, 82%);
+      color: hsl(280, 90%, 30%);
+      font-weight: 700;
+      border: 1px solid hsl(280, 80%, 60%);
+    }
+
+    .calendar-day.today {
+      border: 1.5px solid var(--primary);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .calendar-legend {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 14px;
+      font-size: 10px;
+      font-weight: 600;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .legend-color {
+      width: 10px;
+      height: 10px;
+      border-radius: 3px;
+    }
+
+    /* Accordéons Interactifs Prévention */
+    .accordion {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .accordion-item {
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      overflow: hidden;
+      background: #ffffff;
+      transition: all var(--transition-fast);
+    }
+
+    .accordion-header {
+      padding: 14px 16px;
+      background: hsl(var(--primary-hue), 30%, 98%);
+      font-family: 'Outfit', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--primary-dark);
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: background var(--transition-fast);
+    }
+
+    .accordion-header:hover {
+      background: var(--primary-light);
+    }
+
+    .accordion-icon {
+      font-size: 14px;
+      transition: transform var(--transition-fast);
+    }
+
+    .accordion-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height var(--transition-normal) ease-out;
+      font-size: 12px;
+      line-height: 1.55;
+      color: var(--text-main);
+      background: #ffffff;
+    }
+
+    .accordion-inner {
+      padding: 14px 16px;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .accordion-item.active .accordion-icon {
+      transform: rotate(45deg);
+    }
+
+    .accordion-item.active .accordion-header {
+      background: var(--primary-light);
+    }
+
+    /* Quiz Prévention Interactif */
+    .quiz-card {
+      background: linear-gradient(135deg, hsl(325, 80%, 97%) 0%, hsl(var(--primary-hue), 70%, 93%) 100%);
+      border: none;
+    }
+
+    .quiz-question-box {
+      margin-top: 8px;
+    }
+
+    .quiz-progress {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--primary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 6px;
+    }
+
+    .quiz-question {
+      font-family: 'Outfit', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--primary-dark);
+      margin-bottom: 14px;
+      line-height: 1.45;
+    }
+
+    .quiz-options {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .quiz-option {
+      background: white;
+      border: 1px solid var(--border-color);
+      padding: 12px 14px;
+      border-radius: 14px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-main);
+      cursor: pointer;
+      text-align: left;
+      transition: all var(--transition-fast);
+      outline: none;
+    }
+
+    .quiz-option:hover {
+      border-color: var(--primary);
+      background: var(--primary-light);
+    }
+
+    .quiz-option.correct {
+      background: #e8f5e9 !important;
+      border-color: #2e7d32 !important;
+      color: #2e7d32 !important;
+    }
+
+    .quiz-option.incorrect {
+      background: #ffebee !important;
+      border-color: #c62828 !important;
+      color: #c62828 !important;
+    }
+
+    .quiz-explanation {
+      margin-top: 14px;
+      padding: 12px;
+      background: white;
+      border-radius: 12px;
+      border-left: 4px solid var(--primary);
+      font-size: 11px;
+      line-height: 1.5;
+      color: var(--text-main);
+      display: none;
+      animation: slideIn var(--transition-fast);
+    }
+
+    .quiz-action-btn {
+      margin-top: 14px;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      padding: 10px 16px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      display: none;
+      width: 100%;
+      text-align: center;
+    }
+
+    /* Symptômes Section */
+    .form-group {
+      margin-bottom: 14px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    select,
+    textarea {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      font-size: 13px;
+      font-family: inherit;
+      color: var(--text-main);
+      background: hsl(var(--primary-hue), 20%, 98%);
+      outline: none;
+      resize: none;
+      transition: var(--transition-fast);
+    }
+
+    select:focus,
+    textarea:focus {
+      border-color: var(--primary);
+      background: white;
+    }
+
+    .risk-result {
+      margin-top: 16px;
+      padding: 14px;
+      border-radius: 16px;
+      text-align: center;
+      font-size: 13px;
+      font-weight: 600;
+      animation: slideIn var(--transition-fast);
+    }
+
+    .risk-low {
+      background: #e8f5e9;
+      color: #2e7d32;
+      border: 1px solid #c8e6c9;
+    }
+
+    .risk-moderate {
+      background: #fff3e0;
+      color: #e65100;
+      border: 1px solid #ffe0b2;
+    }
+
+    .risk-high {
+      background: #ffebee;
+      color: #c62828;
+      border: 1px solid #ffcdd2;
+    }
+
+    /* Centres & Partenaires */
+    .clinic-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .clinic-card {
+      background: hsl(var(--primary-hue), 40%, 98%);
+      border: 1px solid var(--border-color);
+      border-radius: 18px;
+      padding: 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .clinic-details h4 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--primary-dark);
+    }
+
+    .clinic-details p {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .clinic-btn {
+      background: var(--primary);
+      border: none;
+      color: white;
+      padding: 8px 12px;
+      border-radius: 12px;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: var(--transition-fast);
+      white-space: nowrap;
+    }
+
+    .clinic-btn:active {
+      transform: scale(0.95);
+    }
+
+    /* Écran Paramètres & Compte Premium (Style Ritmo) */
+    .account-card {
+      background: linear-gradient(135deg, hsl(var(--primary-hue), 80%, 97%) 0%, hsl(var(--primary-hue), 70%, 93%) 100%);
+      border-radius: 24px;
+      padding: 24px 20px;
+      text-align: center;
+      border: none;
+      margin-bottom: 16px;
+    }
+
+    .avatar-wrapper {
+      position: relative;
+      width: 90px;
+      height: 90px;
+      margin: 0 auto 12px auto;
+    }
+
+    .avatar-image {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      border: 3px solid #ffffff;
+      box-shadow: var(--shadow-md);
+      background: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 44px;
+      overflow: hidden;
+    }
+
+    .avatar-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .avatar-edit-btn {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 28px;
+      height: 28px;
+      background: var(--primary);
+      border: 2px solid white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 14px;
+      cursor: pointer;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .account-name {
+      font-family: 'Outfit', sans-serif;
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--primary-dark);
+    }
+
+    .account-email {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    /* Formulaire d'édition de profil de compte */
+    .profile-section-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--primary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-top: 16px;
+      margin-bottom: 10px;
+      padding-bottom: 4px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .profile-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .save-profile-btn {
+      background: var(--primary-gradient);
+      color: white;
+      border: none;
+      border-radius: 16px;
+      padding: 12px;
+      width: 100%;
+      font-weight: 700;
+      font-size: 13px;
+      font-family: 'Outfit', sans-serif;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(216, 27, 96, 0.18);
+      margin-top: 10px;
+      transition: all var(--transition-fast);
+    }
+
+    .save-profile-btn:active {
+      transform: scale(0.98);
+    }
+
+    .logout-btn {
+      background: hsl(var(--primary-hue), 20%, 94%);
+      color: var(--primary-dark);
+      border: 1px dashed var(--primary);
+      border-radius: 16px;
+      padding: 12px;
+      width: 100%;
+      font-weight: 700;
+      font-size: 13px;
+      cursor: pointer;
+      margin-top: 16px;
+      transition: all var(--transition-fast);
+    }
+
+    .logout-btn:active {
+      background: var(--primary-light);
+    }
+
+    /* Hub Prévention — cartes de navigation */
+    .prev-hub-card {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      background: hsl(var(--primary-hue), 20%, 98%);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 14px;
+      margin-bottom: 10px;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+
+    .prev-hub-card:hover {
+      border-color: var(--primary);
+      background: var(--primary-light);
+      transform: translateX(2px);
+    }
+
+    .prev-hub-card:active {
+      transform: scale(0.98);
+    }
+
+    .prev-hub-icon {
+      font-size: 28px;
+      width: 46px;
+      height: 46px;
+      background: white;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border-color);
+    }
+
+    .prev-hub-info {
+      flex: 1;
+    }
+
+    .prev-hub-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--primary-dark);
+      margin-bottom: 3px;
+    }
+
+    .prev-hub-desc {
+      font-size: 11px;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    .prev-hub-arrow {
+      font-size: 22px;
+      color: var(--primary);
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    /* Bouton retour sous-pages */
+    .back-btn {
+      background: none;
+      border: none;
+      color: var(--primary);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      padding: 0;
+      margin-bottom: 12px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-family: inherit;
+      transition: opacity var(--transition-fast);
+    }
+
+    .back-btn:hover {
+      opacity: 0.7;
+    }
+
+    .read-aloud-btn {
+      background: var(--primary-gradient);
+      border: none;
+      border-radius: 50%;
+      width: 38px;
+      height: 38px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      cursor: pointer;
+      color: white;
+      box-shadow: 0 4px 12px rgba(216, 27, 96, 0.3);
+      transition: all var(--transition-fast);
+      animation: gentlePulse 2.5s infinite;
+    }
+    
+    @keyframes gentlePulse {
+      0% { box-shadow: 0 4px 12px rgba(216, 27, 96, 0.3); transform: scale(1); }
+      50% { box-shadow: 0 4px 20px rgba(216, 27, 96, 0.6); transform: scale(1.05); }
+      100% { box-shadow: 0 4px 12px rgba(216, 27, 96, 0.3); transform: scale(1); }
+    }
+
+    .read-aloud-btn:hover {
+      transform: scale(1.1);
+      animation: none;
+    }
+
+    .read-aloud-btn:active {
+      transform: scale(0.95);
+      animation: none;
+    }
+
+    /* Styles pour l'impression du dossier médical */
+    @media print {
+      body * {
+        visibility: hidden;
+      }
+
+      #medicalRecordScreen,
+      #medicalRecordScreen * {
+        visibility: visible;
+      }
+
+      #medicalRecordScreen {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        margin: 0;
+        padding: 20px;
+        background: white;
+      }
+
+      .medical-record-action,
+      .bottom-nav,
+      .app-header,
+      .status-bar {
+        display: none !important;
+      }
+
+      .card {
+        box-shadow: none;
+        border: 1px solid #eee;
+      }
+    }
+
+    /* Modal de Sélection d'Avatar */
+    .modal-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.4);
+      z-index: 1100;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      backdrop-filter: blur(4px);
+    }
+
+    .modal-card {
+      background: white;
+      border-radius: 28px;
+      padding: 20px;
+      width: 100%;
+      max-width: 320px;
+      box-shadow: var(--shadow-lg);
+      text-align: center;
+    }
+
+    .modal-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--primary-dark);
+      margin-bottom: 16px;
+    }
+
+    .avatar-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .avatar-choice {
+      font-size: 32px;
+      padding: 8px;
+      background: hsl(var(--primary-hue), 20%, 98%);
+      border: 2px solid transparent;
+      border-radius: 16px;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+
+    .avatar-choice:hover {
+      background: var(--primary-light);
+    }
+
+    .avatar-choice.selected {
+      border-color: var(--primary);
+      background: var(--primary-light);
+    }
+
+    .avatar-upload-label {
+      display: block;
+      font-size: 12px;
+      color: var(--primary);
+      text-decoration: underline;
+      cursor: pointer;
+      margin-bottom: 16px;
+    }
+
+    .modal-close-btn {
+      background: var(--primary-dark);
+      color: white;
+      border: none;
+      padding: 8px 20px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    /* Historique & Suivi */
+    .history-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .history-item {
+      background: hsl(var(--primary-hue), 20%, 98%);
+      padding: 10px 14px;
+      border-radius: 14px;
+      border: 1px solid var(--border-color);
+      font-size: 12px;
+      line-height: 1.4;
+    }
+
+    .history-item-header {
+      display: flex;
+      justify-content: space-between;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .history-item-date {
+      color: var(--text-muted);
+      font-size: 10px;
+    }
+
+    /* Barre de navigation inférieure fixe dans le téléphone */
+    .bottom-nav {
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(10px);
+      padding: 10px 16px 22px 16px;
+      display: flex;
+      justify-content: space-between;
+      border-top: 1px solid rgba(194, 24, 91, 0.08);
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+    }
+
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      font-size: 10px;
+      color: var(--text-muted);
+      font-weight: 600;
+      cursor: pointer;
+      flex: 1;
+      transition: all var(--transition-fast);
+    }
+
+    .nav-item.active {
+      color: var(--primary);
+    }
+
+    .nav-icon {
+      font-size: 20px;
+      transition: transform var(--transition-fast);
+    }
+
+    .nav-item.active .nav-icon {
+      transform: translateY(-2px);
+    }
+
+    /* Notifications style Toast */
+    .toast {
+      position: absolute;
+      bottom: 80px;
+      left: 20px;
+      right: 20px;
+      background: #333;
+      color: white;
+      padding: 12px 16px;
+      border-radius: 14px;
+      font-size: 12px;
+      text-align: center;
+      box-shadow: var(--shadow-lg);
+      z-index: 2000;
+      display: none;
+      animation: fadeInUp var(--transition-fast);
+    }
+
+    @keyframes fadeInUp {
+      from {
+        transform: translateY(20px);
+        opacity: 0;
+      }
+
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    /* Rendre adaptatif sur mobile */
+    @media (max-width: 480px) {
+      body {
+        padding: 0;
+        background: var(--bg-light);
+      }
+
+      .device-wrapper {
+        width: 100%;
+        height: 100vh;
+        border: none;
+        border-radius: 0;
+      }
+
+      .dynamic-island {
+        display: none;
+      }
+
+      .status-bar {
+        padding-top: 14px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Cadre de Smartphone -->
+  <div class="device-wrapper">
+    <div class="dynamic-island"></div>
+
+    <div class="mobile-app">
+
+      <!-- Splash Screen -->
+      <div id="splash" class="splash-screen">
+        <div class="splash-logo">🌸</div>
+        <div class="splash-title">Mon Alliée Santé</div>
+        <div class="splash-subtitle">Comprendre son corps. Prévenir plus tôt. Sauver des vies.</div>
+        <div class="splash-loader"></div>
+      </div>
+
+      <!-- Écrans d'Authentification Intégrale -->
+      <div id="authOverlay" class="auth-overlay">
+        <div class="auth-header">
+          <div class="auth-logo-icon">🌸</div>
+          <div class="auth-logo-text">Mon Alliée Santé</div>
+          <div class="auth-subtitle">Intelligence collective au service des femmes</div>
+        </div>
+
+        <!-- 1. Écran de Connexion -->
+        <div id="loginCard" class="auth-card">
+          <div class="auth-form-title">Connexion</div>
+          <div class="auth-input-group">
+            <label for="loginEmail">Email</label>
+            <input type="email" id="loginEmail" class="auth-input" placeholder="exemple@mail.com"
+              value="sarah@email.com">
+          </div>
+          <div class="auth-input-group">
+            <label for="loginPassword">Mot de passe</label>
+            <input type="password" id="loginPassword" class="auth-input" placeholder="••••••••" value="123456">
+          </div>
+          <button id="loginSubmitBtn" class="auth-btn">Se connecter</button>
+          <div class="auth-switch-text" id="goToRegisterBtn">Pas encore de compte ? <span>S'inscrire</span></div>
+          <div class="auth-switch-text" id="goToResetBtn" style="margin-top: 8px; font-size: 11px;">Mot de passe oublié
+            ?</div>
+          <div class="auth-demo-btn" id="loginDemoBtn">🔓 Découvrir en mode Démo</div>
+        </div>
+
+        <!-- 2. Écran d'Inscription -->
+        <div id="registerCard" class="auth-card" style="display: none;">
+          <div class="auth-form-title">Créer un compte</div>
+          <div class="auth-input-group">
+            <label for="regName">Prénom</label>
+            <input type="text" id="regName" class="auth-input" placeholder="Sarah">
+          </div>
+          <div class="auth-input-group">
+            <label for="regEmail">Email</label>
+            <input type="email" id="regEmail" class="auth-input" placeholder="exemple@mail.com">
+          </div>
+          <div class="auth-input-group">
+            <label for="regPassword">Mot de passe</label>
+            <input type="password" id="regPassword" class="auth-input" placeholder="Min. 6 caractères">
+          </div>
+          <button id="registerSubmitBtn" class="auth-btn">Créer le compte</button>
+          <div class="auth-switch-text" id="goToLoginBtn">Déjà inscrite ? <span>Se connecter</span></div>
+        </div>
+
+        <!-- 3. Écran Réinitialisation MDP -->
+        <div id="resetCard" class="auth-card" style="display: none;">
+          <div class="auth-form-title">Mot de passe oublié</div>
+          <p style="font-size: 12px; color: var(--text-muted); text-align: center; margin-bottom: 16px;">Saisissez votre
+            email. Nous vous enverrons un lien pour redéfinir votre mot de passe.</p>
+          <div class="auth-input-group">
+            <label for="resetEmail">Email</label>
+            <input type="email" id="resetEmail" class="auth-input" placeholder="exemple@mail.com">
+          </div>
+          <button id="resetSubmitBtn" class="auth-btn">Envoyer</button>
+          <div class="auth-switch-text" id="backToLoginFromResetBtn">Retour à la <span>connexion</span></div>
+        </div>
+      </div>
+
+      <!-- Contenu de l'application -->
+      <div id="appContent" class="app-content" style="display: none;">
+
+        <!-- Barre d'état iOS -->
+        <div class="status-bar">
+          <span id="statusBarTime">09:41</span>
+          <div class="status-bar-icons">
+            <span>📶</span>
+            <span>🔋 98%</span>
+          </div>
+        </div>
+
+        <!-- En-tête de l'application (Symétrique avec Profil à gauche et Notifications à droite) -->
+        <div class="app-header">
+          <div class="profile-trigger" id="headerProfileTrigger" title="Paramètres & Compte">👩⚕️</div>
+          <div class="logo-container">
+            <h2>Mon Alliée Santé</h2>
+            <p>prévention & intelligence féminine</p>
+          </div>
+          <div class="settings-trigger" id="headerNotificationTrigger" title="Notifications">🔔</div>
+        </div>
+
+        <!-- Zone de défilement des écrans -->
+        <div class="screen-container">
+
+          <!-- ÉCRAN 1 : ACCUEIL -->
+          <div id="homeScreen" class="screen active-screen">
+            <div class="card welcome-card">
+              <h3 id="welcomeMessage">Bonjour, Sarah !</h3>
+              <p>Votre alliée santé intelligente. Explorez nos modules de prévention précoce pour les femmes.</p>
+            </div>
+
+            <!-- Grille de navigation raccourcie -->
+            <div class="quick-grid">
+              <div class="quick-card" data-nav="chat">
+                <span class="quick-card-icon">💬</span>
+                <span class="quick-card-label">Confidente</span>
+              </div>
+              <div class="quick-card" data-nav="symptoms">
+                <span class="quick-card-icon">🩺</span>
+                <span class="quick-card-label">Symptômes</span>
+              </div>
+              <div class="quick-card" data-nav="tracking">
+                <span class="quick-card-icon">📊</span>
+                <span class="quick-card-label">Mon Suivi</span>
+              </div>
+              <div class="quick-card" data-nav="prevention">
+                <span class="quick-card-icon">🎗️</span>
+                <span class="quick-card-label">Prévention</span>
+              </div>
+              <div class="quick-card" data-nav="clinics">
+                <span class="quick-card-icon">🏥</span>
+                <span class="quick-card-label">Centres</span>
+              </div>
+              <div class="quick-card" data-nav="medicalRecord">
+                <span class="quick-card-icon">📋</span>
+                <span class="quick-card-label">Fiche médicale</span>
+              </div>
+            </div>
+
+            <!-- Résumé quotidien -->
+            <div class="card" style="padding: 12px 14px;">
+              <div class="card-title" style="margin-bottom: 8px; font-size: 13px;">📈 Mon résumé</div>
+
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px;">
+                <!-- Bloc Prévention -->
+                <div
+                  style="background: hsl(280, 80%, 97%); border: 1px solid hsl(280, 60%, 90%); border-radius: 12px; padding: 8px;">
+                  <div style="display: flex; align-items: center; gap: 4px; margin-bottom: 2px;">
+                    <span style="font-size: 12px;">🎗️</span>
+                    <span
+                      style="font-family: 'Outfit', sans-serif; font-size: 11px; font-weight: 700; color: hsl(280, 70%, 30%);">Prévention</span>
+                  </div>
+                  <div style="font-size: 10px; color: var(--text-main); line-height: 1.3;">Auto-examen recommandé ce
+                    mois.</div>
+                </div>
+
+                <!-- Bloc Cycle -->
+                <div
+                  style="background: hsl(var(--primary-hue), 80%, 97%); border: 1px solid hsl(var(--primary-hue), 60%, 90%); border-radius: 12px; padding: 8px;">
+                  <div style="display: flex; align-items: center; gap: 4px; margin-bottom: 2px;">
+                    <span style="font-size: 12px;">📅</span>
+                    <span
+                      style="font-family: 'Outfit', sans-serif; font-size: 11px; font-weight: 700; color: var(--primary-dark);">Cycle</span>
+                  </div>
+                  <div id="dashPeriodText" style="font-size: 10px; color: var(--text-main); line-height: 1.3;">Règles
+                    dans ~14j.</div>
+                </div>
+              </div>
+
+              <!-- Bloc Astuce -->
+              <div
+                style="display: flex; gap: 6px; align-items: flex-start; background: hsl(var(--primary-hue), 20%, 98%); border-radius: 10px; padding: 8px; border: 1px solid var(--border-color);">
+                <span style="font-size: 12px; margin-top: 1px;">💡</span>
+                <div style="font-size: 10px; color: var(--text-muted); line-height: 1.3; font-style: italic;">
+                  L'auto-surveillance régulière permet de repérer rapidement un changement.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ÉCRAN 2 : CHAT AVEC IA -->
+          <div id="chatScreen" class="screen">
+            <div class="card" style="padding: 14px;">
+              <div class="card-title">💬 Mon espace d'écoute</div>
+              <p style="font-size: 11px; color: var(--text-muted); margin-bottom: 12px; line-height: 1.4;">Notre IA est
+                conçue pour vulgariser et orienter de façon anonyme. Elle ne remplace pas un diagnostic médical.</p>
+
+              <div class="chat-container">
+                <div class="chat-messages" id="chatMessages">
+                  <div class="chat-bubble ai">
+                    🌸 Bonjour ! Je suis Mon Alliée Santé. Je vous accompagne de façon anonyme. Vous pouvez me poser des
+                    questions sur vos cycles, des douleurs, ou des doutes concernant votre santé féminine. Que
+                    ressentez-vous ?
+                  </div>
+                </div>
+
+                <!-- Options Langue et Voix -->
+                <div style="display: flex; gap: 8px; margin-bottom: 10px; padding: 0 10px;">
+                  <select class="auth-input"
+                    style="padding: 6px 10px; font-size: 12px; height: auto; border-radius: 12px; flex: 1;">
+                    <option value="fr">Français (Texte & Vocal)</option>
+                    <option value="fr">Ewe (Texte & Vocal)</option>
+                    <option value="wo">Wolof (Texte & Vocal)</option>
+                    <option value="bm">Bambara (Texte & Vocal)</option>
+                    <option value="sw">Swahili (Texte & Vocal)</option>
+                  </select>
+                  <button class="auth-btn"
+                    style="width: auto; padding: 6px 12px; margin: 0; font-size: 12px; display: flex; align-items: center; gap: 5px; border-radius: 12px;">🎤
+                    Vocal</button>
+                </div>
+
+                <!-- Zone d'écriture -->
+                <div class="chat-input-bar">
+                  <input type="text" id="chatInput" placeholder="Ex: J'ai repéré une grosseur au sein...">
+                  <button id="sendChatBtn">➔</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ÉCRAN 3 : ANALYSE DES SYMPTÔMES -->
+          <div id="symptomsScreen" class="screen">
+            <div class="card">
+              <div class="card-title">🩺 Mes ressentis</div>
+              <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 16px;">Renseignez vos symptômes pour
+                que l'IA vous donne de premiers repères d'orientation et de surveillance.</p>
+
+              <div class="form-group">
+                <label for="symptomType">Symptôme constaté</label>
+                <select id="symptomType">
+                  <option value="douleur_sein">Douleur ou sensibilité au sein</option>
+                  <option value="grosseur_sein">Grosseur ou masse dans le sein</option>
+                  <option value="fatigue">Fatigue excessive et prolongée</option>
+                  <option value="pertes">Pertes vaginales anormales</option>
+                  <option value="cycle_irregulier">Cycle menstruel très irrégulier</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="symptomDesc">Description additionnelle</label>
+                <textarea id="symptomDesc" rows="3"
+                  placeholder="Indiquez l'intensité, la durée ou tout autre détail important..."></textarea>
+              </div>
+
+              <button id="analyzeBtn" class="auth-btn" style="margin-top: 8px;">Lancer l'analyse 🧠</button>
+
+              <div id="riskResult" class="risk-result" style="display: none;"></div>
+            </div>
+          </div>
+
+          <!-- ÉCRAN 4 : MON SUIVI & CALENDRIER MENSTRUEL -->
+          <div id="trackingScreen" class="screen">
+            <!-- Calendrier Interactif -->
+            <div class="card">
+              <div class="card-title">📊 Mon Calendrier de Cycle</div>
+              <p style="font-size: 11px; color: var(--text-muted); margin-bottom: 12px;">Visualisez vos phases
+                menstruelles en temps réel en fonction des paramètres définis sur votre compte.</p>
+
+              <div class="calendar-widget">
+                <div class="calendar-month-title" id="calendarMonthTitle">Mai 2026</div>
+                <div class="calendar-grid" id="calendarGrid">
+                  <!-- Injecté dynamiquement -->
+                </div>
+                <div class="calendar-legend">
+                  <div class="legend-item">
+                    <div class="legend-color" style="background: hsl(340, 90%, 90%);"></div><span>Règles</span>
+                  </div>
+                  <div class="legend-item">
+                    <div class="legend-color" style="background: hsl(280, 85%, 82%);"></div><span>Ovulation</span>
+                  </div>
+                  <div class="legend-item">
+                    <div class="legend-color" style="background: hsl(280, 80%, 92%); border-radius: 3px;"></div>
+                    <span>Fertile</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Historique des Symptômes -->
+            <div class="card">
+              <div class="card-title">📅 Historique de mes analyses</div>
+              <div class="history-list" id="historyList">
+                <p style="font-size: 12px; color: var(--text-muted); text-align: center;">Aucun historique récent
+                  d'analyse.</p>
+              </div>
+              <button id="clearHistoryBtn"
+                style="background: none; border: none; color: var(--primary); text-decoration: underline; font-size: 11px; margin-top: 12px; cursor: pointer; display: block; width: 100%;">Effacer
+                mon historique</button>
+            </div>
+
+            <!-- Rappel Auto-examen -->
+            <div class="card">
+              <div class="card-title">🔔 Rappels & Prévention</div>
+              <div style="font-size: 12px; line-height: 1.5;">
+                <p>📍 <strong>Auto-examen des seins :</strong> À effectuer idéalement 2 à 3 jours après la fin de vos
+                  règles.</p>
+                <p style="margin-top: 6px;">💉 <strong>Vaccination HPV :</strong> Recommandée dès l'adolescence pour
+                  prévenir le cancer du col utérin.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- ÉCRAN 5 : PRÉVENTION — HUB MENU -->
+          <div id="preventionScreen" class="screen">
+            <div class="card">
+              <div class="card-title">🎗️ Mes gestes de préventions</div>
+              <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 16px;">Explorez nos modules de
+                sensibilisation pour mieux prendre soin de vous.</p>
+
+              <!-- Carte Auto-Examen -->
+              <div class="prev-hub-card" id="goToAutoExamen">
+                <div class="prev-hub-icon">🪞</div>
+                <div class="prev-hub-info">
+                  <div class="prev-hub-title">Guide d'Auto-Examen</div>
+                  <div class="prev-hub-desc">Apprenez à effectuer votre auto-examen des seins en 4 étapes illustrées.
+                  </div>
+                </div>
+                <div class="prev-hub-arrow">›</div>
+              </div>
+
+              <!-- Carte Quiz -->
+              <div class="prev-hub-card" id="goToQuiz">
+                <div class="prev-hub-icon">🧠</div>
+                <div class="prev-hub-info">
+                  <div class="prev-hub-title">Quiz de Sensibilisation</div>
+                  <div class="prev-hub-desc">Testez vos connaissances sur la santé féminine en quelques questions.</div>
+                </div>
+                <div class="prev-hub-arrow">›</div>
+              </div>
+
+              <!-- Carte Encyclopédie -->
+              <div class="prev-hub-card" id="goToEncyclopedie">
+                <div class="prev-hub-icon">📖</div>
+                <div class="prev-hub-info">
+                  <div class="prev-hub-title">Encyclopédie Santé</div>
+                  <div class="prev-hub-desc">Fiches médicales simplifiées : HPV, endométriose, SOPK, hygiène intime.
+                  </div>
+                </div>
+                <div class="prev-hub-arrow">›</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ÉCRAN 5a : AUTO-EXAMEN -->
+          <div id="autoExamenScreen" class="screen">
+            <div class="card">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <button class="back-btn" id="backFromAutoExamen" style="margin-bottom: 0;">← Retour</button>
+                <button class="read-aloud-btn" onclick="readAloud('autoExamenScreen')" title="Écouter le guide">🔊</button>
+              </div>
+              <div class="card-title">🪞 Guide d'Auto-Examen Interactif</div>
+              <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 14px;">L'auto-examen des seins doit
+                être réalisé une fois par mois, quelques jours après vos règles.</p>
+              <div class="carousel-container">
+                <div class="carousel-slides" id="carouselSlides">
+                  <div class="carousel-slide active" data-step="0">
+                    <div class="slide-icon">🪞</div>
+                    <div class="slide-title">Étape 1 : L'Observation</div>
+                    <div class="slide-desc">Placez-vous devant un miroir, bras le long du corps. Examinez visuellement
+                      vos deux seins. Recherchez tout changement de forme, de volume, ou toute anomalie de la peau
+                      (creux, rougeurs, plissement).</div>
+                  </div>
+                  <div class="carousel-slide" data-step="1">
+                    <div class="slide-icon">🙋‍♀️</div>
+                    <div class="slide-title">Étape 2 : Le Lever de Bras</div>
+                    <div class="slide-desc">Levez ensuite vos bras au-dessus de la tête. Regardez attentivement si la
+                      forme des seins change de manière asymétrique, ou si un pli, un renfoncement ou un écoulement au
+                      niveau des mamelons apparaît.</div>
+                  </div>
+                  <div class="carousel-slide" data-step="2">
+                    <div class="slide-icon">🤚</div>
+                    <div class="slide-title">Étape 3 : La Palpation Debout</div>
+                    <div class="slide-desc">Avec les trois doigts du milieu de la main opposée, palpez fermement le sein
+                      gauche en décrivant de petits mouvements circulaires, de l'extérieur vers le mamelon. Répétez le
+                      processus pour le sein droit.</div>
+                  </div>
+                  <div class="carousel-slide" data-step="3">
+                    <div class="slide-icon">🛌</div>
+                    <div class="slide-title">Étape 4 : La Palpation Allongée</div>
+                    <div class="slide-desc">Allongez-vous sur le dos et répétez la palpation des deux seins. Enfin,
+                      pressez délicatement le mamelon pour vérifier l'absence d'écoulement suspect. En cas de doute ou
+                      de masse, consultez un spécialiste.</div>
+                  </div>
+                </div>
+                <div class="carousel-nav">
+                  <button class="carousel-btn" id="carouselPrevBtn" disabled>Précédent</button>
+                  <div class="carousel-dots" id="carouselDots">
+                    <div class="carousel-dot active"></div>
+                    <div class="carousel-dot"></div>
+                    <div class="carousel-dot"></div>
+                    <div class="carousel-dot"></div>
+                  </div>
+                  <button class="carousel-btn" id="carouselNextBtn">Suivant</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ÉCRAN 5b : QUIZ -->
+          <div id="quizScreen" class="screen">
+            <div class="card quiz-card">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <button class="back-btn" id="backFromQuiz" style="margin-bottom: 0;">← Retour</button>
+                <button class="read-aloud-btn" onclick="readAloud('quizScreen')" title="Écouter le quiz">🔊</button>
+              </div>
+              <div class="card-title">🧠 Testez vos connaissances</div>
+              <div class="quiz-question-box" id="quizQuestionBox">
+                <div class="quiz-progress" id="quizProgress">Question 1 sur 3</div>
+                <div class="quiz-question" id="quizQuestionText">À partir de quel âge est-il recommandé d'effectuer un
+                  dépistage régulier du cancer du col de l'utérus ?</div>
+                <div class="quiz-options" id="quizOptions"></div>
+                <div class="quiz-explanation" id="quizExplanation"></div>
+                <button class="quiz-action-btn" id="quizNextBtn">Question suivante ➔</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- ÉCRAN 5c : ENCYCLOPÉDIE -->
+          <div id="encyclopedieScreen" class="screen">
+            <div class="card">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <button class="back-btn" id="backFromEncyclopedie" style="margin-bottom: 0;">← Retour</button>
+                <button class="read-aloud-btn" onclick="readAloud('encyclopedieScreen')" title="Écouter l'encyclopédie">🔊</button>
+              </div>
+              <div class="card-title">📖 Encyclopédie Prévention Santé</div>
+              <p style="font-size: 11px; color: var(--text-muted); margin-bottom: 12px;">Fiches médicales simplifiées
+                pour mieux comprendre votre corps.</p>
+              <div class="accordion">
+                <div class="accordion-item">
+                  <div class="accordion-header"><span>🛡️ Col de l'utérus & Vaccin HPV</span><span
+                      class="accordion-icon">+</span></div>
+                  <div class="accordion-content">
+                    <div class="accordion-inner">Le cancer du col de l'utérus est principalement causé par des
+                      infections à Papillomavirus Humain (HPV). <br><br><strong>💡 Conseils clés :</strong><br>•
+                      <strong>Vaccination :</strong> Très efficace pour les jeunes filles de 9 à 14 ans avant leur
+                      premier rapport.<br>• <strong>Dépistage (Frottis) :</strong> Recommandé tous les 3 ans entre 25 et
+                      65 ans.
+                    </div>
+                  </div>
+                </div>
+                <div class="accordion-item">
+                  <div class="accordion-header"><span>🩸 Comprendre l'Endométriose</span><span
+                      class="accordion-icon">+</span></div>
+                  <div class="accordion-content">
+                    <div class="accordion-inner">L'endométriose se caractérise par la présence de tissu similaire à la
+                      muqueuse utérine en dehors de l'utérus, causant de vives douleurs.<br><br><strong>🚨 Quand
+                        consulter ?</strong><br>• Si vos règles sont si douloureuses qu'elles vous empêchent d'aller à
+                      l'école ou au travail.<br>• Si vous ressentez des douleurs intenses lors des rapports sexuels.
+                    </div>
+                  </div>
+                </div>
+                <div class="accordion-item">
+                  <div class="accordion-header"><span>🔄 SOPK & Équilibre Hormonal</span><span
+                      class="accordion-icon">+</span></div>
+                  <div class="accordion-content">
+                    <div class="accordion-inner">Le Syndrome des Ovaires Polykystiques (SOPK) est un déséquilibre
+                      hormonal fréquent affectant l'ovulation et les cycles.<br><br><strong>📊 Symptômes courants
+                        :</strong><br>• Cycles très irréguliers ou absence prolongée de règles.<br>• Excès de pilosité,
+                      acné sévère, ou fatigue intense.</div>
+                  </div>
+                </div>
+                <div class="accordion-item">
+                  <div class="accordion-header"><span>🧼 Hygiène intime : Mythes & Réalités</span><span
+                      class="accordion-icon">+</span></div>
+                  <div class="accordion-content">
+                    <div class="accordion-inner">Prendre soin de son hygiène intime implique de respecter le pH naturel
+                      de la flore vaginale.<br><br><strong>❌ Mythe des douches vaginales :</strong><br>Le vagin est un
+                      organe autonettoyant. Le laver de l'intérieur détruit les bonnes bactéries
+                      protectrices.<br><br><strong>✅ Recommandations :</strong><br>• Utiliser de l'eau tiède ou un savon
+                      doux sans parfum pour la vulve extérieure.<br>• Privilégier des sous-vêtements en coton respirant.
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ÉCRAN 6 : CENTRES PROCHES -->
+          <div id="clinicsScreen" class="screen">
+            <div class="card">
+              <div class="card-title">🏥 Centres Partenaires & Hôpitaux</div>
+              <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 16px;">Retrouvez des centres médicaux
+                à proximité proposant des dépistages et des consultations de gynécologie.</p>
+
+              <div class="clinic-list" id="clinicsList">
+                <!-- Généré dynamiquement -->
+              </div>
+            </div>
+          </div>
+
+          <!-- ÉCRAN 7 : PARAMÈTRES & COMPTE (STYLE RITMO, accessible via en-tête) -->
+          <div id="accountScreen" class="screen">
+            <!-- Entête du Profil -->
+            <div class="account-card">
+              <div class="avatar-wrapper">
+                <div class="avatar-image" id="profileAvatar">👩⚕️</div>
+                <div class="avatar-edit-btn" id="avatarEditTrigger" title="Changer d'avatar">✎</div>
+              </div>
+              <div class="account-name" id="accountDisplayName">Sarah</div>
+              <div class="account-email" id="accountDisplayEmail">sarah@email.com</div>
+            </div>
+
+            <!-- Formulaire Interactif d'Édition du Profil -->
+            <div class="card" style="padding-top: 8px;">
+              <div class="profile-section-title">Informations Personnelles</div>
+
+              <div class="profile-row">
+                <div class="form-group">
+                  <label for="profFirstName">Prénom</label>
+                  <input type="text" id="profFirstName" class="auth-input" style="padding: 10px 12px; font-size:13px;"
+                    value="Sarah">
+                </div>
+                <div class="form-group">
+                  <label for="profLastName">Nom</label>
+                  <input type="text" id="profLastName" class="auth-input" style="padding: 10px 12px; font-size:13px;"
+                    value="">
+                </div>
+              </div>
+
+              <div class="profile-row">
+                <div class="form-group">
+                  <label for="profAge">Date de naissance</label>
+                  <input type="date" id="profAge" class="auth-input" style="padding: 10px 12px; font-size:13px;">
+                </div>
+                <div class="form-group">
+                  <label for="profCountry">Pays</label>
+                  <select id="profCountry" style="padding: 10px 12px; font-size:13px;">
+                    <option value="Togo" selected>Togo</option>
+                    <option value="Sénégal">Sénégal</option>
+                    <option value="Côte d'Ivoire">Côte d'Ivoire</option>
+                    <option value="Rwanda">Rwanda</option>
+                    <option value="Cameroun">Cameroun</option>
+                    <option value="Bénin">Bénin</option>
+                    <option value="Autre">Autre</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="profile-section-title">Profil de Santé Menstruel</div>
+
+              <div class="profile-row">
+                <div class="form-group">
+                  <label for="profBloodType">Groupe Sanguin</label>
+                  <select id="profBloodType" style="padding: 10px 12px; font-size:13px;">
+                    <option value="Non renseigné">Non renseigné</option>
+                    <option value="O+">O+</option>
+                    <option value="O-">O-</option>
+                    <option value="A+">A+</option>
+                    <option value="A-">A-</option>
+                    <option value="B+">B+</option>
+                    <option value="B-">B-</option>
+                    <option value="AB+">AB+</option>
+                    <option value="AB-">AB-</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="profCycle">Durée du cycle (jours)</label>
+                  <input type="number" id="profCycle" class="auth-input" style="padding: 10px 12px; font-size:13px;"
+                    value="28">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="profLastPeriod">Date de début des dernières règles</label>
+                <input type="date" id="profLastPeriod" class="auth-input" style="padding: 10px 12px; font-size:13px;">
+              </div>
+
+              <div class="profile-section-title">Sécurité & Système</div>
+
+              <div class="form-group">
+                <label for="profPassword">Nouveau mot de passe</label>
+                <input type="password" id="profPassword" class="auth-input" style="padding: 10px 12px; font-size:13px;"
+                  placeholder="Laisser vide si inchangé">
+              </div>
+
+              <div
+                style="background: hsl(var(--primary-hue), 20%, 98%); border: 1px solid var(--border-color); border-radius: 12px; padding: 10px; font-size: 11px; margin-bottom: 14px; text-align: left;">
+                <div style="display: flex; flex-direction: column; gap: 8px;">
+                  <a href="#" style="color: var(--primary); text-decoration: none; font-weight: 600;">🔒 Politique de confidentialité</a>
+                  <a href="#" style="color: var(--primary); text-decoration: none; font-weight: 600;">📄 Conditions d'utilisation</a>
+                  <a href="#" style="color: var(--primary); text-decoration: none; font-weight: 600;">❓ Centre d'aide et support</a>
+                </div>
+              </div>
+
+              <button id="saveProfileBtn" class="save-profile-btn">Enregistrer les paramètres 💾</button>
+
+              <button id="logoutBtn" class="logout-btn">Se déconnecter 🔓</button>
+            </div>
+          </div>
+
+          <!-- ÉCRAN 7 : FICHE MÉDICALE -->
+          <div id="medicalRecordScreen" class="screen">
+            <div class="card" style="text-align: center; margin-bottom: 10px;">
+              <h3 style="font-size: 18px; color: var(--primary-dark); margin-bottom: 5px;">📋 Fiche médicale</h3>
+              <p style="font-size: 13px; color: var(--text-muted);">Résumé de vos informations de santé</p>
+              <button class="save-profile-btn medical-record-action" onclick="window.print()"
+                style="margin-top: 15px;">⬇️ Télécharger la fiche médicale</button>
+            </div>
+
+            <div class="card">
+              <div class="profile-section-title" style="margin-top: 0;">👤 Identité</div>
+              <div style="font-size: 13px; color: var(--text-main); margin-bottom: 10px;">
+                <strong>Nom :</strong> <span id="recordName">Sarah</span><br>
+                <strong>Date de naissance :</strong> <span id="recordAge">Non renseigné</span><br>
+                <strong>Groupe Sanguin :</strong> <span id="recordBloodType">Non renseigné</span>
+              </div>
+
+              <div class="profile-section-title">📅 Cycle Menstruel</div>
+              <div style="font-size: 13px; color: var(--text-main); margin-bottom: 10px;">
+                <strong>Durée moyenne du cycle :</strong> <span id="recordCycle">28</span> jours<br>
+                <strong>Date des dernières règles :</strong> <span id="recordLastPeriod">Non renseignée</span>
+              </div>
+
+              <div class="profile-section-title">📝 Symptômes Récents</div>
+              <div style="font-size: 13px; color: var(--text-main); margin-bottom: 10px;">
+                <em>(Renseignés manuellement par l'utilisatrice)</em><br><br>
+                <textarea class="auth-input" placeholder="Ex: Douleurs pelviennes, maux de tête..."
+                  style="font-size: 13px; min-height: 60px; margin-top: 5px;"></textarea>
+              </div>
+
+              <div class="profile-section-title">⚠️ Antécédents & Allergies</div>
+              <div style="font-size: 13px; color: var(--text-main); margin-bottom: 10px;">
+                <textarea class="auth-input" placeholder="Ex: Allergie à la pénicilline, asthme..."
+                  style="font-size: 13px; min-height: 60px; margin-top: 5px;"></textarea>
+              </div>
+
+              <div class="profile-section-title">📋 Notes pour le médecin</div>
+              <div style="font-size: 13px; color: var(--text-main); margin-bottom: 10px;">
+                <textarea class="auth-input" placeholder="Questions à poser lors de la consultation..."
+                  style="font-size: 13px; min-height: 60px; margin-top: 5px;"></textarea>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Navigation inférieure fixe (Sans "Compte", remplacé par "Prévention") -->
+        <div class="bottom-nav">
+          <div class="nav-item active" data-screen="home">
+            <span class="nav-icon">🏠</span>
+            <span>Accueil</span>
+          </div>
+          <div class="nav-item" data-screen="chat">
+            <span class="nav-icon">💬</span>
+            <span>Confidente</span>
+          </div>
+          <div class="nav-item" data-screen="symptoms">
+            <span class="nav-icon">🩺</span>
+            <span>Symptômes</span>
+          </div>
+          <div class="nav-item" data-screen="tracking">
+            <span class="nav-icon">📊</span>
+            <span>Suivi</span>
+          </div>
+          <div class="nav-item" data-screen="prevention">
+            <span class="nav-icon">🎗️</span>
+            <span>Prévention</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Modal Sélecteur d'Avatar -->
+      <div class="modal-overlay" id="avatarModal">
+        <div class="modal-card">
+          <div class="modal-title">Choisir votre Avatar</div>
+          <div class="avatar-grid">
+            <div class="avatar-choice" data-avatar="👩⚕️">👩⚕️</div>
+            <div class="avatar-choice" data-avatar="👩">👩</div>
+            <div class="avatar-choice" data-avatar="👩🦰">👩🦰</div>
+            <div class="avatar-choice" data-avatar="👱‍♀️">👱‍♀️</div>
+            <div class="avatar-choice" data-avatar="👩🏽">👩🏽</div>
+            <div class="avatar-choice" data-avatar="👩🏾">👩🏾</div>
+          </div>
+          <label for="avatarFileInput" class="avatar-upload-label">Téléverser une image personnalisée</label>
+          <input type="file" id="avatarFileInput" style="display: none;" accept="image/*">
+          <button class="modal-close-btn" id="avatarModalClose">Annuler</button>
+        </div>
+      </div>
+
+      <!-- Toast Notifications -->
+      <div class="toast" id="appToast">Notification</div>
+
+    </div>
+  </div>
+
+  <script>
+    // Éléments DOM généraux
+    const splash = document.getElementById('splash');
+    const authOverlay = document.getElementById('authOverlay');
+    const appContent = document.getElementById('appContent');
+    const appToast = document.getElementById('appToast');
+    const statusBarTime = document.getElementById('statusBarTime');
+
+    // Mettre à jour l'heure simulée
+    function updateClock() {
+      const now = new Date();
+      const hours = String(now.getHours()).padStart(2, '0');
+      const minutes = String(now.getMinutes()).padStart(2, '0');
+      statusBarTime.textContent = `${hours}:${minutes}`;
+    }
+    updateClock();
+    setInterval(updateClock, 60000);
+
+    // Toast Utilitaire
+    function showToast(message, duration = 3000) {
+      appToast.textContent = message;
+      appToast.style.display = 'block';
+      setTimeout(() => {
+        appToast.style.display = 'none';
+      }, duration);
+    }
+
+    // Gestion du Splash Screen
+    setTimeout(() => {
+      splash.classList.add('fade-out');
+      setTimeout(() => splash.style.display = 'none', 600);
+    }, 2000);
+
+    // Base de données simulée utilisateur (LocalStorage)
+    let userSession = JSON.parse(localStorage.getItem('herhealth_user_session')) || null;
+
+    // Éléments DOM d'authentification
+    const loginCard = document.getElementById('loginCard');
+    const registerCard = document.getElementById('registerCard');
+    const resetCard = document.getElementById('resetCard');
+
+    const goToRegisterBtn = document.getElementById('goToRegisterBtn');
+    const goToLoginBtn = document.getElementById('goToLoginBtn');
+    const goToResetBtn = document.getElementById('goToResetBtn');
+    const backToLoginFromResetBtn = document.getElementById('backToLoginFromResetBtn');
+
+    const loginSubmitBtn = document.getElementById('loginSubmitBtn');
+    const registerSubmitBtn = document.getElementById('registerSubmitBtn');
+    const resetSubmitBtn = document.getElementById('resetSubmitBtn');
+    const loginDemoBtn = document.getElementById('loginDemoBtn');
+
+    // Navigation entre les vues d'Auth
+    goToRegisterBtn.addEventListener('click', () => {
+      loginCard.style.display = 'none';
+      registerCard.style.display = 'block';
+    });
+    goToLoginBtn.addEventListener('click', () => {
+      registerCard.style.display = 'none';
+      loginCard.style.display = 'block';
+    });
+    goToResetBtn.addEventListener('click', () => {
+      loginCard.style.display = 'none';
+      resetCard.style.display = 'block';
+    });
+    backToLoginFromResetBtn.addEventListener('click', () => {
+      resetCard.style.display = 'none';
+      loginCard.style.display = 'block';
+    });
+
+    // Actions d'Authentification
+    loginSubmitBtn.addEventListener('click', () => {
+      const email = document.getElementById('loginEmail').value.trim();
+      const mdp = document.getElementById('loginPassword').value.trim();
+      if (!email || !mdp) {
+        showToast("Veuillez remplir tous les champs.");
+        return;
+      }
+      userSession = {
+        name: "Sarah",
+        lastName: "",
+        email: email,
+        age: 24,
+        country: "Togo",
+        bloodType: "O+",
+        cycle: 28,
+        lastPeriod: "2026-05-15",
+        avatar: "👩⚕️"
+      };
+      saveAndInitSession();
+    });
+
+    registerSubmitBtn.addEventListener('click', () => {
+      const name = document.getElementById('regName').value.trim();
+      const email = document.getElementById('regEmail').value.trim();
+      const mdp = document.getElementById('regPassword').value.trim();
+      if (!name || !email || !mdp) {
+        showToast("Veuillez remplir tous les champs.");
+        return;
+      }
+      if (mdp.length < 6) {
+        showToast("Le mot de passe doit comporter au moins 6 caractères.");
+        return;
+      }
+      userSession = {
+        name: name,
+        lastName: "",
+        email: email,
+        age: 22,
+        country: "Togo",
+        bloodType: "Non renseigné",
+        cycle: 28,
+        lastPeriod: "",
+        avatar: "👩"
+      };
+      saveAndInitSession();
+    });
+
+    resetSubmitBtn.addEventListener('click', () => {
+      const email = document.getElementById('resetEmail').value.trim();
+      if (!email) {
+        showToast("Veuillez inscrire votre email.");
+        return;
+      }
+      showToast("Lien de réinitialisation envoyé par email !");
+      resetCard.style.display = 'none';
+      loginCard.style.display = 'block';
+    });
+
+    loginDemoBtn.addEventListener('click', () => {
+      userSession = {
+        name: "Visiteuse",
+        lastName: "",
+        email: "demo@monallieesante.ai",
+        age: 20,
+        country: "Togo",
+        bloodType: "Non renseigné",
+        cycle: 28,
+        lastPeriod: "2026-05-20",
+        avatar: "👩🏽"
+      };
+      saveAndInitSession();
+    });
+
+    function saveAndInitSession() {
+      localStorage.setItem('herhealth_user_session', JSON.stringify(userSession));
+      authOverlay.style.display = 'none';
+      appContent.style.display = 'flex';
+      applySessionToUI();
+      renderMenstrualCalendar();
+      showToast(`Ravie de vous revoir, ${userSession.name} !`);
+    }
+
+    // Déconnexion
+    document.getElementById('logoutBtn').addEventListener('click', () => {
+      localStorage.removeItem('herhealth_user_session');
+      userSession = null;
+      appContent.style.display = 'none';
+      authOverlay.style.display = 'flex';
+      loginCard.style.display = 'block';
+      registerCard.style.display = 'none';
+      resetCard.style.display = 'none';
+    });
+
+    // Appliquer la session aux écrans
+    function applySessionToUI() {
+      if (!userSession) return;
+      document.getElementById('welcomeMessage').textContent = `Bonjour, ${userSession.name} !`;
+
+      // En-tête avatar
+      const trigger = document.getElementById('headerProfileTrigger');
+      if (userSession.avatar.startsWith('data:') || userSession.avatar.startsWith('http')) {
+        trigger.innerHTML = `<img src="${userSession.avatar}" alt="Profil">`;
+      } else {
+        trigger.innerHTML = userSession.avatar;
+      }
+
+      // Écran Compte
+      document.getElementById('accountDisplayName').textContent = `${userSession.name} ${userSession.lastName || ''}`;
+      document.getElementById('accountDisplayEmail').textContent = userSession.email;
+
+      const profAvatar = document.getElementById('profileAvatar');
+      if (userSession.avatar.startsWith('data:') || userSession.avatar.startsWith('http')) {
+        profAvatar.innerHTML = `<img src="${userSession.avatar}" alt="Avatar">`;
+      } else {
+        profAvatar.innerHTML = userSession.avatar;
+      }
+
+      // Remplir le formulaire
+      document.getElementById('profFirstName').value = userSession.name;
+      document.getElementById('profLastName').value = userSession.lastName || '';
+      document.getElementById('profAge').value = userSession.age || '';
+      document.getElementById('profCountry').value = userSession.country || "Togo";
+      document.getElementById('profBloodType').value = userSession.bloodType || "Non renseigné";
+      document.getElementById('profCycle').value = userSession.cycle || 28;
+      document.getElementById('profLastPeriod').value = userSession.lastPeriod || '';
+
+      // Mettre à jour le dossier médical
+      document.getElementById('recordName').textContent = `${userSession.name} ${userSession.lastName || ''}`;
+      document.getElementById('recordAge').textContent = userSession.age || 'Non renseigné';
+      document.getElementById('recordBloodType').textContent = userSession.bloodType || 'Non renseigné';
+      document.getElementById('recordCycle').textContent = userSession.cycle || 28;
+      document.getElementById('recordLastPeriod').textContent = userSession.lastPeriod || 'Non renseignée';
+
+      // Mettre à jour le texte du cycle sur l'accueil
+      updateDashboardCountdown();
+    }
+
+    // Calculer et afficher les jours restants avant les prochaines règles dans le Dashboard
+    function updateDashboardCountdown() {
+      if (!userSession || !userSession.lastPeriod) {
+        document.getElementById('dashPeriodText').innerHTML = `À renseigner dans l'onglet Compte.`;
+        return;
+      }
+
+      const lastPeriodDate = new Date(userSession.lastPeriod);
+      const cycleLength = userSession.cycle || 28;
+
+      const nextPeriodDate = new Date(lastPeriodDate.getTime() + cycleLength * 24 * 60 * 60 * 1000);
+      const today = new Date();
+
+      nextPeriodDate.setHours(0, 0, 0, 0);
+      today.setHours(0, 0, 0, 0);
+
+      const diffTime = nextPeriodDate.getTime() - today.getTime();
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+      if (diffDays > 0) {
+        document.getElementById('dashPeriodText').innerHTML = `Règles dans ~<strong>${diffDays}j</strong>.`;
+      } else if (diffDays === 0) {
+        document.getElementById('dashPeriodText').innerHTML = `Règles <strong>aujourd'hui</strong>.`;
+      } else {
+        const delayedDays = Math.abs(diffDays);
+        document.getElementById('dashPeriodText').innerHTML = `Retard ~<strong>${delayedDays}j</strong>.`;
+      }
+    }
+
+    // Rendu Dynamique du Calendrier Menstruel
+    function renderMenstrualCalendar() {
+      const calendarGrid = document.getElementById('calendarGrid');
+      const calendarMonthTitle = document.getElementById('calendarMonthTitle');
+
+      if (!calendarGrid) return;
+      calendarGrid.innerHTML = '';
+
+      const weekDays = ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'];
+      weekDays.forEach(d => {
+        const header = document.createElement('div');
+        header.className = 'calendar-header-day';
+        header.textContent = d;
+        calendarGrid.appendChild(header);
+      });
+
+      const year = 2026;
+      const monthIndex = 4; // Mai
+      calendarMonthTitle.textContent = "Mai 2026";
+
+      const firstDay = new Date(year, monthIndex, 1);
+      let startOffset = firstDay.getDay();
+      if (startOffset === 0) startOffset = 7;
+      startOffset--;
+
+      const totalDays = 31;
+
+      for (let i = 0; i < startOffset; i++) {
+        const emptyCell = document.createElement('div');
+        calendarGrid.appendChild(emptyCell);
+      }
+
+      const lastPeriodStr = (userSession && userSession.lastPeriod) ? userSession.lastPeriod : '2026-05-15';
+      const lastPeriodDate = new Date(lastPeriodStr);
+      const cycleLength = (userSession && userSession.cycle) ? userSession.cycle : 28;
+
+      for (let day = 1; day <= totalDays; day++) {
+        const dayCell = document.createElement('div');
+        dayCell.className = 'calendar-day';
+        dayCell.textContent = day;
+
+        const currentCellDate = new Date(year, monthIndex, day);
+        currentCellDate.setHours(0, 0, 0, 0);
+
+        const diffTime = currentCellDate.getTime() - lastPeriodDate.getTime();
+        const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+
+        if (diffDays >= 0) {
+          const cyclePosition = diffDays % cycleLength;
+
+          if (cyclePosition >= 0 && cyclePosition < 5) {
+            dayCell.classList.add('period');
+          } else if (cyclePosition === cycleLength - 14) {
+            dayCell.classList.add('ovulation');
+            dayCell.title = "Jour d'ovulation";
+          } else if (cyclePosition >= cycleLength - 16 && cyclePosition <= cycleLength - 12) {
+            dayCell.classList.add('fertile');
+          }
+        }
+
+        if (day === 28) {
+          dayCell.classList.add('today');
+          dayCell.title = "Aujourd'hui";
+        }
+
+        calendarGrid.appendChild(dayCell);
+      }
+    }
+
+    if (userSession) {
+      authOverlay.style.display = 'none';
+      appContent.style.display = 'flex';
+      applySessionToUI();
+      renderMenstrualCalendar();
+    } else {
+      authOverlay.style.display = 'flex';
+      appContent.style.display = 'none';
+    }
+
+    // Gestion du Profil Avatar Modal
+    const avatarModal = document.getElementById('avatarModal');
+    const avatarEditTrigger = document.getElementById('avatarEditTrigger');
+    const avatarModalClose = document.getElementById('avatarModalClose');
+    const avatarFileInput = document.getElementById('avatarFileInput');
+
+    avatarEditTrigger.addEventListener('click', () => {
+      avatarModal.style.display = 'flex';
+      document.querySelectorAll('.avatar-choice').forEach(choice => {
+        if (choice.getAttribute('data-avatar') === userSession.avatar) {
+          choice.classList.add('selected');
+        } else {
+          choice.classList.remove('selected');
+        }
+      });
+    });
+
+    avatarModalClose.addEventListener('click', () => {
+      avatarModal.style.display = 'none';
+    });
+
+    // Choix dans la grille
+    document.querySelectorAll('.avatar-choice').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const choice = btn.getAttribute('data-avatar');
+        userSession.avatar = choice;
+        saveSessionLocally();
+        applySessionToUI();
+        avatarModal.style.display = 'none';
+        showToast("Avatar mis à jour !");
+      });
+    });
+
+    // Upload d'image personnalisée
+    avatarFileInput.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function (event) {
+          userSession.avatar = event.target.result;
+          saveSessionLocally();
+          applySessionToUI();
+          avatarModal.style.display = 'none';
+          showToast("Image de profil mise à jour !");
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    function saveSessionLocally() {
+      localStorage.setItem('herhealth_user_session', JSON.stringify(userSession));
+    }
+
+    // Enregistrement des données du profil
+    document.getElementById('saveProfileBtn').addEventListener('click', () => {
+      userSession.name = document.getElementById('profFirstName').value.trim();
+      userSession.lastName = document.getElementById('profLastName').value.trim();
+      userSession.age = document.getElementById('profAge').value;
+      userSession.country = document.getElementById('profCountry').value;
+      userSession.bloodType = document.getElementById('profBloodType').value;
+      userSession.cycle = parseInt(document.getElementById('profCycle').value) || 28;
+      userSession.lastPeriod = document.getElementById('profLastPeriod').value;
+
+      const newMdp = document.getElementById('profPassword').value;
+      if (newMdp.trim().length > 0) {
+        if (newMdp.trim().length < 6) {
+          showToast("Le mot de passe doit faire au moins 6 caractères.");
+          return;
+        }
+        showToast("Mot de passe mis à jour.");
+      }
+
+      saveSessionLocally();
+      applySessionToUI();
+      renderMenstrualCalendar();
+      showToast("Profil enregistré avec succès !");
+    });
+
+    // Navigation des écrans principaux (Bottom Bar & Raccourcis)
+    const screens = {
+      home: document.getElementById('homeScreen'),
+      chat: document.getElementById('chatScreen'),
+      symptoms: document.getElementById('symptomsScreen'),
+      tracking: document.getElementById('trackingScreen'),
+      prevention: document.getElementById('preventionScreen'),
+      autoExamen: document.getElementById('autoExamenScreen'),
+      quiz: document.getElementById('quizScreen'),
+      encyclopedie: document.getElementById('encyclopedieScreen'),
+      clinics: document.getElementById('clinicsScreen'),
+      account: document.getElementById('accountScreen'),
+      medicalRecord: document.getElementById('medicalRecordScreen')
+    };
+
+    // Navigation sous-pages Prévention
+    document.getElementById('goToAutoExamen').addEventListener('click', () => showScreen('autoExamen'));
+    document.getElementById('goToQuiz').addEventListener('click', () => { showScreen('quiz'); renderQuiz(); });
+    document.getElementById('goToEncyclopedie').addEventListener('click', () => showScreen('encyclopedie'));
+    document.getElementById('backFromAutoExamen').addEventListener('click', () => showScreen('prevention'));
+    document.getElementById('backFromQuiz').addEventListener('click', () => showScreen('prevention'));
+    document.getElementById('backFromEncyclopedie').addEventListener('click', () => showScreen('prevention'));
+
+    function showScreen(screenKey) {
+      if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+      Object.keys(screens).forEach(key => {
+        if (screens[key]) {
+          screens[key].classList.remove('active-screen');
+        }
+      });
+      if (screens[screenKey]) {
+        screens[screenKey].classList.add('active-screen');
+
+        document.querySelectorAll('.bottom-nav .nav-item').forEach(item => {
+          if (item.getAttribute('data-screen') === screenKey) {
+            item.classList.add('active');
+          } else {
+            item.classList.remove('active');
+          }
+        });
+
+        if (!['home', 'chat', 'symptoms', 'tracking', 'prevention'].includes(screenKey)) {
+          document.querySelectorAll('.bottom-nav .nav-item').forEach(item => item.classList.remove('active'));
+        }
+
+        if (screenKey === 'tracking') {
+          renderMenstrualCalendar();
+        }
+      }
+    }
+
+    // Bottom Navigation clic
+    document.querySelectorAll('.bottom-nav .nav-item').forEach(item => {
+      item.addEventListener('click', () => {
+        const screenKey = item.getAttribute('data-screen');
+        showScreen(screenKey);
+      });
+    });
+
+    // Raccourcis d'accueil clic
+    document.querySelectorAll('.quick-card').forEach(card => {
+      card.addEventListener('click', () => {
+        const targetScreen = card.getAttribute('data-nav');
+        showScreen(targetScreen);
+      });
+    });
+
+    // Bouton Notifications 🔔 dans l'en-tête (en haut à droite)
+    document.getElementById('headerNotificationTrigger').addEventListener('click', () => {
+      showToast('Aucune nouvelle notification pour le moment.');
+    });
+
+    // Profil raccourci de l'en-tête (en haut à gauche) - Ouvre les paramètres
+    document.getElementById('headerProfileTrigger').addEventListener('click', () => {
+      showScreen('account');
+    });
+
+    // CARROUSEL INTERACTIF DE L'AUTO-EXAMEN
+    let activeStep = 0;
+    const slides = document.querySelectorAll('.carousel-slide');
+    const dots = document.querySelectorAll('.carousel-dot');
+    const prevBtn = document.getElementById('carouselPrevBtn');
+    const nextBtn = document.getElementById('carouselNextBtn');
+
+    function updateCarousel() {
+      slides.forEach((slide, idx) => {
+        if (idx === activeStep) {
+          slide.classList.add('active');
+        } else {
+          slide.classList.remove('active');
+        }
+      });
+
+      dots.forEach((dot, idx) => {
+        if (idx === activeStep) {
+          dot.classList.add('active');
+        } else {
+          dot.classList.remove('active');
+        }
+      });
+
+      prevBtn.disabled = (activeStep === 0);
+      nextBtn.disabled = (activeStep === slides.length - 1);
+      if (activeStep === slides.length - 1) {
+        nextBtn.textContent = "Compris ✔";
+      } else {
+        nextBtn.textContent = "Suivant";
+      }
+    }
+
+    nextBtn.addEventListener('click', () => {
+      if (activeStep < slides.length - 1) {
+        activeStep++;
+        updateCarousel();
+      } else {
+        showToast("Examen terminé ! Bravo pour ce geste préventif.");
+        showScreen('home');
+      }
+    });
+
+    prevBtn.addEventListener('click', () => {
+      if (activeStep > 0) {
+        activeStep--;
+        updateCarousel();
+      }
+    });
+
+    // ACCORDÉONS INTERACTIFS (Encyclopédie de prévention)
+    document.querySelectorAll('.accordion-header').forEach(header => {
+      header.addEventListener('click', () => {
+        const item = header.parentElement;
+        const content = item.querySelector('.accordion-content');
+
+        document.querySelectorAll('.accordion-item').forEach(acc => {
+          if (acc !== item) {
+            acc.classList.remove('active');
+            acc.querySelector('.accordion-content').style.maxHeight = null;
+          }
+        });
+
+        item.classList.toggle('active');
+        if (item.classList.contains('active')) {
+          content.style.maxHeight = content.scrollHeight + "px";
+        } else {
+          content.style.maxHeight = null;
+        }
+      });
+    });
+
+    // QUIZ INTERACTIF DE SENSIBILISATION
+    const quizQuestions = [
+      {
+        question: "À partir de quel âge est-il recommandé d'effectuer un dépistage régulier du cancer du col de l'utérus ?",
+        options: ["Dès l'adolescence (12-15 ans)", "À partir de 25 ans", "Seulement après la ménopause"],
+        correctIndex: 1,
+        explanation: "💡 Le frottis de dépistage du cancer du col de l'utérus est recommandé tous les 3 ans à partir de 25 ans, pour détecter d'éventuelles lésions précancéreuses."
+      },
+      {
+        question: "La vaccination contre le HPV prévient principalement quel type de cancer féminin ?",
+        options: ["Le cancer du sein", "Le cancer de l'ovaire", "Le cancer du col de l'utérus"],
+        correctIndex: 2,
+        explanation: "💡 Le vaccin contre le papillomavirus humain (HPV) protège contre plus de 90% des virus responsables du cancer du col de l'utérus. Il est recommandé avant le début de la vie sexuelle."
+      },
+      {
+        question: "Des douleurs de règles extrêmement intenses, qui empêchent de suivre les cours ou de travailler, sont-elles considérées comme normales ?",
+        options: ["Oui, c'est habituel pour beaucoup de femmes", "Non, cela peut être le signe d'une endométriose", "Seulement en cas de fatigue"],
+        correctIndex: 1,
+        explanation: "💡 Des douleurs menstruelles invalidantes ne sont pas normales. Elles peuvent cacher une endométriose ou une autre pathologie. Il est essentiel de consulter un gynécologue."
+      }
+    ];
+
+    let quizIndex = 0;
+    let quizScore = 0;
+
+    function renderQuizQuestion() {
+      const question = quizQuestions[quizIndex];
+      document.getElementById('quizProgress').textContent = `Question ${quizIndex + 1} sur ${quizQuestions.length}`;
+      document.getElementById('quizQuestionText').textContent = question.question;
+
+      const optionsBox = document.getElementById('quizOptions');
+      optionsBox.innerHTML = '';
+
+      question.options.forEach((opt, idx) => {
+        const btn = document.createElement('button');
+        btn.className = 'quiz-option';
+        btn.textContent = opt;
+        btn.addEventListener('click', () => handleQuizAnswer(idx, btn));
+        optionsBox.appendChild(btn);
+      });
+
+      document.getElementById('quizExplanation').style.display = 'none';
+      document.getElementById('quizNextBtn').style.display = 'none';
+    }
+
+    function handleQuizAnswer(selectedIndex, clickedBtn) {
+      const question = quizQuestions[quizIndex];
+      const allButtons = document.querySelectorAll('.quiz-option');
+
+      allButtons.forEach(btn => btn.disabled = true);
+
+      if (selectedIndex === question.correctIndex) {
+        clickedBtn.classList.add('correct');
+        quizScore++;
+        showToast("Bonne réponse ! 🎉");
+      } else {
+        clickedBtn.classList.add('incorrect');
+        allButtons[question.correctIndex].classList.add('correct');
+        showToast("Mauvaise réponse... 😢");
+      }
+
+      const expBox = document.getElementById('quizExplanation');
+      expBox.textContent = question.explanation;
+      expBox.style.display = 'block';
+
+      const nextBtn = document.getElementById('quizNextBtn');
+      nextBtn.style.display = 'block';
+      if (quizIndex === quizQuestions.length - 1) {
+        nextBtn.textContent = "Voir le score final ➔";
+      } else {
+        nextBtn.textContent = "Question suivante ➔";
+      }
+    }
+
+    document.getElementById('quizNextBtn').addEventListener('click', () => {
+      if (quizIndex < quizQuestions.length - 1) {
+        quizIndex++;
+        renderQuizQuestion();
+      } else {
+        const box = document.getElementById('quizQuestionBox');
+        box.innerHTML = `
+          <div style="text-align: center; padding: 20px 10px;">
+            <div style="font-size: 44px; margin-bottom: 12px;">🏆</div>
+            <h4 style="font-family:'Outfit', sans-serif; color:var(--primary-dark); font-size:16px; margin-bottom:8px;">Quiz terminé !</h4>
+            <p style="font-size:13px; margin-bottom: 16px;">Votre score : <strong>${quizScore} sur ${quizQuestions.length}</strong> réponses correctes.</p>
+            <p style="font-size:11px; color:var(--text-muted); line-height: 1.4; margin-bottom: 20px;">Partager ces connaissances avec vos amies et votre famille peut aider à sauver des vies !</p>
+            <button class="auth-btn" id="restartQuizBtn" style="padding:10px 14px; font-size:12px; margin-top:0;">Recommencer le Quiz 🔄</button>
+          </div>
+        `;
+        document.getElementById('restartQuizBtn').addEventListener('click', () => {
+          location.reload();
+        });
+      }
+    });
+
+    renderQuizQuestion();
+
+    // CHAT INTERACTIF IA (Avec indicateur de saisie)
+    const chatMessages = document.getElementById('chatMessages');
+    const chatInput = document.getElementById('chatInput');
+    const sendChatBtn = document.getElementById('sendChatBtn');
+
+    function addMessage(sender, text) {
+      const bubble = document.createElement('div');
+      bubble.className = `chat-bubble ${sender}`;
+      bubble.textContent = text;
+      chatMessages.appendChild(bubble);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    function showTypingIndicator() {
+      const indicator = document.createElement('div');
+      indicator.className = 'typing-indicator';
+      indicator.id = 'chatTypingIndicator';
+      indicator.innerHTML = `
+        <div class="typing-dot"></div>
+        <div class="typing-dot"></div>
+        <div class="typing-dot"></div>
+      `;
+      chatMessages.appendChild(indicator);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    function removeTypingIndicator() {
+      const indicator = document.getElementById('chatTypingIndicator');
+      if (indicator) {
+        indicator.remove();
+      }
+    }
+
+    function getAIResponse(text) {
+      const lower = text.toLowerCase();
+      if (lower.includes('douleur') && lower.includes('sein')) {
+        return "⚠️ Une douleur au sein (mastodynie) est fréquente et souvent bénigne, liée aux fluctuations hormonales. Néanmoins, si elle est localisée, persistante ou s'accompagne d'une rougeur, il est recommandé de consulter pour un examen clinique.";
+      }
+      if (lower.includes('grosseur') || lower.includes('boule') || lower.includes('masse')) {
+        return "🔍 La découverte d'une grosseur ou d'une zone dure dans le sein nécessite un examen clinique attentif par un médecin ou une sage-femme. Ce n'est pas forcément grave, mais c'est le principal signe à faire surveiller par échographie ou mammographie.";
+      }
+      if (lower.includes('fatigue')) {
+        return "💤 Une fatigue excessive peut avoir de nombreuses causes : anémie (manque de fer, fréquent chez les jeunes filles), carences, stress ou manque de sommeil. Si elle persiste après plusieurs jours de repos, parlez-en à un médecin.";
+      }
+      if (lower.includes('pertes') || lower.includes('infection')) {
+        return "🌸 Des pertes vaginales sont normales mais si elles changent de couleur (jaunâtres, verdâtres), de consistance ou s'accompagnent de démangeaisons et d'odeurs fortes, cela peut indiquer une infection traitable. Consultez pour obtenir un traitement approprié.";
+      }
+      if (lower.includes('règles') || lower.includes('cycle')) {
+        return "🔄 Un cycle régulier dure en moyenne entre 21 et 35 jours. Les retards de règles peuvent être causés par le stress, des changements de poids, ou un syndrome des ovaires polykystiques (SOPK). Je vous recommande de suivre vos cycles sur notre outil dédié.";
+      }
+      return "🌸 Merci pour ce partage. Prenez soin de vous en restant attentive à vos signaux corporels. N'hésitez pas à poser une question plus précise sur un symptôme ou un examen.";
+    }
+
+    function handleSendMessage() {
+      const text = chatInput.value.trim();
+      if (!text) return;
+
+      addMessage('user', text);
+      chatInput.value = '';
+
+      setTimeout(() => {
+        showTypingIndicator();
+
+        setTimeout(() => {
+          removeTypingIndicator();
+          const response = getAIResponse(text);
+          addMessage('ai', response);
+        }, 1500);
+      }, 300);
+    }
+
+    sendChatBtn.addEventListener('click', handleSendMessage);
+    chatInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        handleSendMessage();
+      }
+    });
+
+    // ANALYSE DES SYMPTÔMES & HISTORIQUE
+    const analyzeBtn = document.getElementById('analyzeBtn');
+    const riskResult = document.getElementById('riskResult');
+    const symptomTypeSelect = document.getElementById('symptomType');
+    const symptomDescText = document.getElementById('symptomDesc');
+    let historyData = JSON.parse(localStorage.getItem('herhealth_symptom_history')) || [];
+
+    function renderHistory() {
+      const container = document.getElementById('historyList');
+      if (!container) return;
+
+      if (historyData.length === 0) {
+        container.innerHTML = '<p style="font-size: 12px; color: var(--text-muted); text-align: center;">Aucun historique récent d\'analyse.</p>';
+        return;
+      }
+
+      container.innerHTML = historyData.map(item => {
+        let riskClass = item.risk === 'faible' ? 'color: #2e7d32; font-weight:700;' : (item.risk === 'modéré' ? 'color: #e65100; font-weight:700;' : 'color: #c62828; font-weight:700;');
+        return `
+          <div class="history-item">
+            <div class="history-item-header">
+              <span>${item.name}</span>
+              <span style="${riskClass}">${item.risk.toUpperCase()}</span>
+            </div>
+            <p style="font-size: 11px; margin-bottom: 4px;">${item.desc || 'Pas de description supplémentaire'}</p>
+            <div class="history-item-date">📅 ${item.date}</div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    analyzeBtn.addEventListener('click', () => {
+      const value = symptomTypeSelect.value;
+      const desc = symptomDescText.value.trim();
+      const label = symptomTypeSelect.options[symptomTypeSelect.selectedIndex].text;
+
+      let risk = 'faible';
+      let advice = '';
+
+      if (value === 'grosseur_sein') {
+        risk = 'élevé';
+        advice = '⚠️ Diagnostic clinique requis. Prenez rendez-vous rapidement chez un spécialiste ou dans un hôpital proche pour une échographie mammaire.';
+      } else if (value === 'douleur_sein' || value === 'cycle_irregulier') {
+        risk = 'modéré';
+        advice = '📊 Observation recommandée. Si les douleurs persistent plus d\'un cycle ou s\'accompagnent d\'autres anomalies, consultez.';
+      } else if (value === 'pertes') {
+        risk = 'modéré';
+        advice = '💊 Consultation de routine conseillée auprès d\'une sage-femme ou d\'un médecin pour écarter toute infection gynécologique.';
+      } else {
+        risk = 'faible';
+        advice = '🌸 Poursuivez l\'auto-surveillance mensuelle et maintenez un suivi régulier de vos cycles.';
+      }
+
+      riskResult.style.display = 'block';
+      riskResult.className = `risk-result risk-${risk === 'élevé' ? 'high' : (risk === 'modéré' ? 'moderate' : 'low')}`;
+      riskResult.innerHTML = `<strong>Niveau de vigilance : ${risk.toUpperCase()}</strong><br>${advice}`;
+
+      const newItem = {
+        name: label,
+        desc: desc,
+        risk: risk,
+        date: new Date().toLocaleDateString('fr-FR', { hour: '2-digit', minute: '2-digit' })
+      };
+
+      historyData.unshift(newItem);
+      if (historyData.length > 5) historyData.pop();
+
+      localStorage.setItem('herhealth_symptom_history', JSON.stringify(historyData));
+      renderHistory();
+      symptomDescText.value = '';
+
+      showToast("Analyse enregistrée dans votre suivi !");
+    });
+
+    document.getElementById('clearHistoryBtn').addEventListener('click', () => {
+      historyData = [];
+      localStorage.removeItem('herhealth_symptom_history');
+      renderHistory();
+      showToast("Historique d'analyses vidé.");
+    });
+
+    // RENDU DYNAMIQUE DES CENTRES DE SANTÉ PARTENAIRES
+    const clinics = [
+      { name: "CHU Sylvanus Olympio (Service de Gynécologie)", distance: "1.2 km", phone: "+228 22 21 25 01", desc: "Lomé, Togo - Maternité de référence et soins obstétricaux" },
+      { name: "CHU Campus (Service de Prévention & Dépistage)", distance: "3.5 km", phone: "+228 22 25 47 39", desc: "Lomé, Togo - Consultations gynécologiques et frottis de dépistage" },
+      { name: "Clinique Biasa", distance: "4.8 km", phone: "+228 22 21 13 23", desc: "Lomé, Togo - Clinique spécialisée en santé de la reproduction" },
+      { name: "Clinique Internationale de Lomé (CIL)", distance: "6.2 km", phone: "+228 22 26 56 31", desc: "Lomé, Togo - Consultations et imagerie médicale (échographie, mammographie)" }
+    ];
+
+    function renderClinics() {
+      const container = document.getElementById('clinicsList');
+      if (!container) return;
+      container.innerHTML = clinics.map(c => `
+        <div class="clinic-card">
+          <div class="clinic-details">
+            <h4>${c.name}</h4>
+            <p>${c.desc}</p>
+            <p style="font-weight: 600; color: var(--primary-dark); margin-top:4px;">📍 ${c.distance} | 📞 ${c.phone}</p>
+          </div>
+          <button class="clinic-btn" onclick="alert('Rendez-vous préventif simulé au : ${c.name}')">Prendre RDV</button>
+        </div>
+      `).join('');
+    }
+
+    // LECTURE AUDIO (Accessibilité pour malvoyants)
+    function readAloud(screenId) {
+      if (!('speechSynthesis' in window)) {
+        showToast("Votre navigateur ne supporte pas la lecture audio.");
+        return;
+      }
+      window.speechSynthesis.cancel();
+
+      let textToRead = "";
+      if (screenId === 'autoExamenScreen') {
+        const activeSlide = document.querySelector('.carousel-slide.active');
+        if (activeSlide) {
+          textToRead = activeSlide.querySelector('.slide-title').textContent + ". " + activeSlide.querySelector('.slide-desc').textContent;
+        }
+      } else if (screenId === 'quizScreen') {
+        const questionBox = document.getElementById('quizQuestionBox');
+        if (questionBox.innerHTML.includes('Quiz terminé')) {
+          textToRead = document.querySelector('#quizQuestionBox h4').textContent + ". " + document.querySelector('#quizQuestionBox p').textContent;
+        } else {
+          textToRead = document.getElementById('quizProgress').textContent + ". " + document.getElementById('quizQuestionText').textContent + ". ";
+          document.querySelectorAll('.quiz-option').forEach((opt, i) => textToRead += `Option ${i + 1} : ${opt.textContent}. `);
+          const expl = document.getElementById('quizExplanation');
+          if (expl && expl.style.display === 'block') textToRead += "Explication : " + expl.textContent;
+        }
+      } else if (screenId === 'encyclopedieScreen') {
+        textToRead = "Encyclopédie de prévention. ";
+        document.querySelectorAll('#encyclopedieScreen .accordion-item').forEach(item => {
+          textToRead += item.querySelector('.accordion-header span:first-child').textContent + ". ";
+          if (item.classList.contains('active')) {
+             textToRead += item.querySelector('.accordion-inner').textContent + ". ";
+          }
+        });
+      }
+
+      if (textToRead) {
+        const utterance = new SpeechSynthesisUtterance(textToRead);
+        utterance.lang = 'fr-FR';
+        utterance.rate = 1.0;
+        window.speechSynthesis.speak(utterance);
+        showToast("Lecture audio activée 🔊");
+      }
+    }
+
+    renderClinics();
+    renderHistory();
+  </script>
+</body>
+
+</html>
