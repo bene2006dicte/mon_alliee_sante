@@ -1979,7 +1979,16 @@
             <div class="card">
               <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
                 <button class="back-btn" id="backFromAutoExamen" style="margin-bottom: 0;">← Retour</button>
-                <button class="read-aloud-btn" onclick="readAloud('autoExamenScreen')" title="Écouter le guide">🔊</button>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <select id="langAutoExamen" class="auth-input" style="padding: 5px 10px; font-size: 11px; height: auto; border-radius: 12px; width: auto; max-width: 140px;" title="🌍 Langue de lecture audio">
+                    <option value="fr-FR">🇫🇷 Français</option>
+                    <option value="ewe">🇹🇬 Ewe</option>
+                    <option value="wo">🇸🇳 Wolof</option>
+                    <option value="bm">🇲🇱 Bambara</option>
+                    <option value="sw-KE">🇰🇪 Swahili</option>
+                  </select>
+                  <button class="read-aloud-btn" onclick="readAloud('autoExamenScreen')" title="Écouter le guide">🔊</button>
+                </div>
               </div>
               <div class="card-title">🪞 Guide d'Auto-Examen Interactif</div>
               <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 14px;">L'auto-examen des seins doit
@@ -2034,7 +2043,16 @@
             <div class="card quiz-card">
               <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
                 <button class="back-btn" id="backFromQuiz" style="margin-bottom: 0;">← Retour</button>
-                <button class="read-aloud-btn" onclick="readAloud('quizScreen')" title="Écouter le quiz">🔊</button>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <select id="langQuiz" class="auth-input" style="padding: 5px 10px; font-size: 11px; height: auto; border-radius: 12px; width: auto; max-width: 140px;" title="🌍 Langue de lecture audio">
+                    <option value="fr-FR">🇫🇷 Français</option>
+                    <option value="ewe">🇹🇬 Ewe</option>
+                    <option value="wo">🇸🇳 Wolof</option>
+                    <option value="bm">🇲🇱 Bambara</option>
+                    <option value="sw-KE">🇰🇪 Swahili</option>
+                  </select>
+                  <button class="read-aloud-btn" onclick="readAloud('quizScreen')" title="Écouter le quiz">🔊</button>
+                </div>
               </div>
               <div class="card-title">🧠 Testez vos connaissances</div>
               <div class="quiz-question-box" id="quizQuestionBox">
@@ -2053,7 +2071,16 @@
             <div class="card">
               <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
                 <button class="back-btn" id="backFromEncyclopedie" style="margin-bottom: 0;">← Retour</button>
-                <button class="read-aloud-btn" onclick="readAloud('encyclopedieScreen')" title="Écouter l'encyclopédie">🔊</button>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <select id="langEncyclopedie" class="auth-input" style="padding: 5px 10px; font-size: 11px; height: auto; border-radius: 12px; width: auto; max-width: 140px;" title="🌍 Langue de lecture audio">
+                    <option value="fr-FR">🇫🇷 Français</option>
+                    <option value="ewe">🇹🇬 Ewe</option>
+                    <option value="wo">🇸🇳 Wolof</option>
+                    <option value="bm">🇲🇱 Bambara</option>
+                    <option value="sw-KE">🇰🇪 Swahili</option>
+                  </select>
+                  <button class="read-aloud-btn" onclick="readAloud('encyclopedieScreen')" title="Écouter l'encyclopédie">🔊</button>
+                </div>
               </div>
               <div class="card-title">📖 Encyclopédie Prévention Santé</div>
               <p style="font-size: 11px; color: var(--text-muted); margin-bottom: 12px;">Fiches médicales simplifiées
@@ -3127,13 +3154,36 @@
       `).join('');
     }
 
-    // LECTURE AUDIO (Accessibilité pour malvoyants)
+    // LECTURE AUDIO (Accessibilité & Langues locales)
+    // Correspondance des codes langues locales -> langue de fallback TTS + label
+    const localLangMeta = {
+      'fr-FR':  { lang: 'fr-FR', label: 'Français',  native: true },
+      'ewe':    { lang: 'fr-FR', label: 'Ewe',        native: false },
+      'wo':     { lang: 'fr-FR', label: 'Wolof',      native: false },
+      'bm':     { lang: 'fr-FR', label: 'Bambara',    native: false },
+      'sw-KE':  { lang: 'sw-KE', label: 'Swahili',    native: true  }
+    };
+
+    // Sélecteurs langue par écran
+    const langSelectors = {
+      autoExamenScreen:    'langAutoExamen',
+      quizScreen:          'langQuiz',
+      encyclopedieScreen:  'langEncyclopedie'
+    };
+
     function readAloud(screenId) {
       if (!('speechSynthesis' in window)) {
         showToast("Votre navigateur ne supporte pas la lecture audio.");
         return;
       }
       window.speechSynthesis.cancel();
+
+      // Récupérer la langue sélectionnée sur l'écran courant
+      const selectorId = langSelectors[screenId];
+      const selectedCode = selectorId
+        ? (document.getElementById(selectorId)?.value || 'fr-FR')
+        : 'fr-FR';
+      const meta = localLangMeta[selectedCode] || localLangMeta['fr-FR'];
 
       let textToRead = "";
       if (screenId === 'autoExamenScreen') {
@@ -3156,17 +3206,23 @@
         document.querySelectorAll('#encyclopedieScreen .accordion-item').forEach(item => {
           textToRead += item.querySelector('.accordion-header span:first-child').textContent + ". ";
           if (item.classList.contains('active')) {
-             textToRead += item.querySelector('.accordion-inner').textContent + ". ";
+            textToRead += item.querySelector('.accordion-inner').textContent + ". ";
           }
         });
       }
 
       if (textToRead) {
         const utterance = new SpeechSynthesisUtterance(textToRead);
-        utterance.lang = 'fr-FR';
+        utterance.lang = meta.lang;
         utterance.rate = 1.0;
         window.speechSynthesis.speak(utterance);
-        showToast("Lecture audio activée 🔊");
+
+        if (!meta.native) {
+          // Langue locale sélectionnée : TTS non disponible nativement, lecture en français
+          showToast(`🌍 ${meta.label} : lecture en français (TTS local non disponible) 🔊`);
+        } else {
+          showToast(`Lecture audio activée — ${meta.label} 🔊`);
+        }
       }
     }
 
